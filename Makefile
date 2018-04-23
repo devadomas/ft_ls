@@ -6,7 +6,7 @@
 #    By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/09 16:23:27 by azaliaus          #+#    #+#              #
-#    Updated: 2018/04/23 14:53:54 by azaliaus         ###   ########.fr        #
+#    Updated: 2018/04/23 20:10:38 by azaliaus         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,6 @@ clean:
 	@cd libft && make clean
 
 fclean: clean
-	@rm ft_ls
+	@rm -rf $(NAME)
 
 re: fclean all
