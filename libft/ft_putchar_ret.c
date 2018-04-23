@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_upper.c                                     :+:      :+:    :+:   */
+/*   ft_putchar_ret.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 13:26:00 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/18 11:24:46 by azaliaus         ###   ########.fr       */
+/*   Created: 2018/04/22 17:07:35 by azaliaus          #+#    #+#             */
+/*   Updated: 2018/04/22 17:08:15 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <unistd.h>
 
-void		ft_str_to_upper(char *s)
+int		ft_putchar_ret(char c)
 {
-	if (!s)
-		return ;
-	while (*s)
-	{
-		*s = ft_toupper(*s);
-		s++;
-	}
+	if (c == 0)
+		return (0);
+	write(1, &c, 1);
+	return (1);
 }

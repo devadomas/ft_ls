@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 14:12:49 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/11 14:45:59 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 11:30:52 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char				*ft_strnstr(const char *haystack,
 		const char *needle, size_t len);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
-void				ft_str_upper(char *s);
+void				ft_str_to_upper(char *s);
 void				ft_str_lower(char *s);
 int					ft_atoi(const char *str);
 int					ft_isalpha(int c);
@@ -78,12 +78,23 @@ void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 char				*ft_get_next_word(char const *s, char c);
-size_t				ft_get_nbr_len(int n);
+int					ft_get_nbr_len(long long int n);
 t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
+char				*ft_strrev(char *str);
+char				*ft_convert_to_base(unsigned long long nbr, int base);
+char				*ft_convert_to_base_long(unsigned long int nbr, int base);
+void				ft_putnbr_unsigned(unsigned long long nbr);
+unsigned long long	ft_atoi_longlong(const char *str);
+int					ft_pow(int nbr, int times);
+void				ft_putchar_unicode(unsigned int c);
+int					ft_unicode_len(unsigned int c);
+void				ft_putnbr_longlong(long long n);
+int					ft_putchar_ret(char c);
+int					ft_get_nbr_len_unsigned(unsigned long long n);
 
 #endif

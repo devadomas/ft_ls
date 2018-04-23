@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_upper.c                                     :+:      :+:    :+:   */
+/*   ft_pow.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 13:26:00 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/18 11:24:46 by azaliaus         ###   ########.fr       */
+/*   Created: 2018/04/21 19:31:22 by azaliaus          #+#    #+#             */
+/*   Updated: 2018/04/21 19:32:17 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_str_to_upper(char *s)
+int		ft_pow(int nbr, int times)
 {
-	if (!s)
-		return ;
-	while (*s)
-	{
-		*s = ft_toupper(*s);
-		s++;
-	}
+	int		ret;
+	int		i;
+
+	i = 1;
+	ret = nbr;
+	if (times == 0)
+		return (1);
+	while (i++ < times)
+		ret *= nbr;
+	return (ret);
 }

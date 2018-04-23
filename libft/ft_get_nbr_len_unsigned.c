@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_upper.c                                     :+:      :+:    :+:   */
+/*   ft_get_nbr_len_unsigned.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 13:26:00 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/18 11:24:46 by azaliaus         ###   ########.fr       */
+/*   Created: 2018/04/23 11:17:56 by azaliaus          #+#    #+#             */
+/*   Updated: 2018/04/23 11:18:48 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_str_to_upper(char *s)
+int		ft_get_nbr_len_unsigned(unsigned long long n)
 {
-	if (!s)
-		return ;
-	while (*s)
-	{
-		*s = ft_toupper(*s);
-		s++;
-	}
+	int				ret;
+
+	ret = 1;
+	while (n /= 10)
+		ret++;
+	return (ret);
 }

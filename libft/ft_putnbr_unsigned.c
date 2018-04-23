@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_upper.c                                     :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 13:26:00 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/18 11:24:46 by azaliaus         ###   ########.fr       */
+/*   Created: 2018/04/04 17:54:47 by azaliaus          #+#    #+#             */
+/*   Updated: 2018/04/23 11:48:09 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_str_to_upper(char *s)
+void		ft_putnbr_unsigned(unsigned long long n)
 {
-	if (!s)
-		return ;
-	while (*s)
+	if (n < 10)
+		ft_putchar(n + '0');
+	else
 	{
-		*s = ft_toupper(*s);
-		s++;
+		ft_putnbr_unsigned(n / 10);
+		ft_putnbr_unsigned(n % 10);
 	}
 }
