@@ -6,13 +6,13 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 19:26:56 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/21 19:26:59 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 13:22:11 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned long long ft_atoi_longlong(const char *str)
+unsigned long long		ft_atoi_longlong(const char *str)
 {
 	unsigned long long	ret;
 

@@ -6,14 +6,14 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 11:32:15 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/21 19:02:34 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 13:26:19 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-static int		base_lenght(unsigned long int nbr, int base)
+static int			base_lenght(unsigned long int nbr, int base)
 {
 	int		i;
 
@@ -28,10 +28,10 @@ static int		base_lenght(unsigned long int nbr, int base)
 	return (i);
 }
 
-static char*	generate_base(int base)
+static char			*generate_base(int base)
 {
 	char		*ret;
-	int 		i;
+	int			i;
 
 	ret = ft_strnew(base);
 	if (!ret)
@@ -49,7 +49,7 @@ static char*	generate_base(int base)
 	return (ret);
 }
 
-char		*ft_convert_to_base_long(unsigned long int nbr, int base)
+char				*ft_convert_to_base_long(unsigned long int nbr, int base)
 {
 	char	*ret;
 	char	*charset;
@@ -73,6 +73,6 @@ char		*ft_convert_to_base_long(unsigned long int nbr, int base)
 		ret[i--] = charset[tmp];
 	}
 	ret[len] = '\0';
-	free(charset); // removed if 
+	free(charset);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 19:28:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/21 20:03:27 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 13:27:57 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-static unsigned int	binary_to_dec(unsigned long long nbr)
+static unsigned int			binary_to_dec(unsigned long long nbr)
 {
-	unsigned int ret;
-	unsigned int tmp;
-	int i;
+	unsigned int		ret;
+	unsigned int		tmp;
+	int					i;
 
 	i = 0;
 	ret = 0;
@@ -31,7 +31,7 @@ static unsigned int	binary_to_dec(unsigned long long nbr)
 	return (ret);
 }
 
-static unsigned long long dec_to_binary(unsigned int c)
+static unsigned long long	dec_to_binary(unsigned int c)
 {
 	unsigned long long		binary;
 	char					*str;
@@ -44,13 +44,13 @@ static unsigned long long dec_to_binary(unsigned int c)
 	return (binary);
 }
 
-int	ft_unicode_len(unsigned int c)
+int							ft_unicode_len(unsigned int c)
 {
 	unsigned long long		binary;
 	unsigned int			helper;
 	unsigned int			counter;
 	unsigned int			i;
-	char			arr[7];
+	char					arr[7];
 
 	counter = 0;
 	binary = dec_to_binary(c);

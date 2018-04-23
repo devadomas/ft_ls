@@ -6,14 +6,14 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 11:15:30 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 11:30:34 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 13:29:21 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-static int		base_lenght(unsigned long long nbr, int base)
+static int				base_lenght(unsigned long long nbr, int base)
 {
 	int		i;
 
@@ -28,13 +28,12 @@ static int		base_lenght(unsigned long long nbr, int base)
 	return (i);
 }
 
-static char*	generate_base(int base)
+static char				*generate_base(int base)
 {
-	char		*ret;
-	int 		i;
+	char				*ret;
+	int					i;
 
-	ret = ft_strnew(base);
-	if (!ret)
+	if (!(ret = ft_strnew(base)))
 		return (NULL);
 	i = 0;
 	while (i < base)
@@ -49,7 +48,7 @@ static char*	generate_base(int base)
 	return (ret);
 }
 
-char		*ft_convert_to_base(unsigned long long nbr, int base)
+char					*ft_convert_to_base(unsigned long long nbr, int base)
 {
 	char	*ret;
 	char	*charset;
@@ -60,10 +59,8 @@ char		*ft_convert_to_base(unsigned long long nbr, int base)
 	if (base < 2 || base > 36)
 		return (NULL);
 	len = base_lenght(nbr, base);
-	if (!(ret = (char *)malloc(sizeof(char) * len + 1)))
-		return (NULL);
-	charset = generate_base(base);
-	if (!charset)
+	if (!(ret = (char *)malloc(sizeof(char) * len + 1)) ||
+			(!(charset = generate_base(base))))
 		return (NULL);
 	i = len - 1;
 	if (nbr == 0)
@@ -76,7 +73,6 @@ char		*ft_convert_to_base(unsigned long long nbr, int base)
 		i--;
 	}
 	ret[len] = '\0';
-	if (charset)
-		free(charset);
+	free(charset);
 	return (ret);
 }
