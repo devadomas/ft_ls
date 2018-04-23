@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 14:12:49 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 11:30:52 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 14:10:59 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,7 @@ int					ft_unicode_len(unsigned int c);
 void				ft_putnbr_longlong(long long n);
 int					ft_putchar_ret(char c);
 int					ft_get_nbr_len_unsigned(unsigned long long n);
+char				*ft_strjoin_conn(const char *s1, const char *s2,
+		const char c);
 
 #endif

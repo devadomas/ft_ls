@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:26:55 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/22 20:54:58 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 16:56:12 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ t_opt			*init_opt(void)
 	ret->reversed = 0;
 	ret->sorted_t = 0;
 	ret->count = 0;
+	ret->hlink_offset = 0;
+	ret->owner_offset = 0;
+	ret->group_offset = 0;
+	ret->size_offset = 0;
 	return (ret);
 }
 

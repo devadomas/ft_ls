@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 11:01:13 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/19 20:42:00 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 15:34:32 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,25 @@
 
 #include <stdio.h>
 
-t_file		*init_file(char *filename)
+t_file		*init_file(const char *filename, const char *path)
 {
 	t_file		*ret;
 	struct stat	sb;
 
 	ret = (t_file *)malloc(sizeof(t_file));
-	if (!ret)
+	if (!ret || !(ret->filename = ft_strdup(filename)) ||
+			!(ret->path = ft_strjoin_conn(path, filename, '/')))
 		return (NULL);
-	ret->filename = filename;
 	/*
 	 * If it's dir
 	 * */
-	if (stat(filename, &sb) == 0)
+	if (stat(ret->path, &sb) == 0)
 	{
 		if (sb.st_mode)
 			ret->is_dir = (S_ISDIR(sb.st_mode) ? 1 : 0);
 	}
 	else
-	{
 		ret->is_dir = 0;
-		return (NULL); /* massive memory leak */
-	}
 	ret->next = NULL;
 	return (ret);
 }
@@ -54,4 +51,12 @@ void		file_push(t_file **list, t_file *file)
 			cpy = cpy->next;
 		cpy->next = file;
 	}
+}
+
+t_bool		is_file_hidden(const char *filename)
+{
+	if (filename)
+		if (*filename == '.')
+			return (TRUE);
+	return (FALSE);
 }

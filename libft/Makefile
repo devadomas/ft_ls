@@ -6,7 +6,7 @@
 #    By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 15:12:15 by azaliaus          #+#    #+#              #
-#    Updated: 2018/04/23 11:20:22 by azaliaus         ###   ########.fr        #
+#    Updated: 2018/04/23 14:11:10 by azaliaus         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 	   ft_strrev.c ft_convert_to_base.c ft_convert_to_base_long.c \
 	   ft_putnbr_unsigned.c ft_pow.c ft_putchar_unicode.c ft_atoi_longlong.c \
 	   ft_unicode_len.c ft_putnbr_longlong.c ft_putchar_ret.c \
-	   ft_get_nbr_len_unsigned.c
+	   ft_get_nbr_len_unsigned.c ft_strjoin_conn.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
