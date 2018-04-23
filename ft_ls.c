@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 20:01:11 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 21:29:51 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 			file_push(&files, init_file(dp->d_name, path));
 		sort_files_byname(&files, (options->reversed ? TRUE : FALSE));
 		load_offsets(files, options);
-		//printf("Size offset: %d\n", options->size_offset);
+		printf("Size offset: %d\n", options->title_offset);
 		cpy = files;
 		if (options->long_list)
 			printf("total %d\n", options->total);

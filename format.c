@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 19:50:25 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 20:21:14 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ static void		print_date(t_file *file, t_opt *options)
 	}
 	time_str = ctime(&(file->sb)->st_mtime);
 	formatted = ft_strsub(time_str, 4, 12);
-	printf("%s", formatted);
+	//printf("%s", formatted);
+	printf(" %ld ", (file->sb)->st_mtime);
 	free(formatted);
 }
 

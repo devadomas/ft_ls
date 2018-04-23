@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 16:27:16 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 20:08:09 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 21:30:40 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ void		load_offsets(t_file *list, t_opt *options)
 			len = ft_get_nbr_len(sb->st_size);
 			if (len > options->size_offset)
 				options->size_offset = len;
+			len = ft_strlen(list->filename);
+			if (len > options->title_offset) /* if its not tmp and t.t. FIX */
+				options->title_offset = len;
 			add_total(list, options);
 		}
 		list = list->next;
