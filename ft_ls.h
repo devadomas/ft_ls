@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 19:06:09 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 19:42:50 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct			s_opt
 	int					owner_offset;
 	int					group_offset;
 	int					size_offset;
+	int					total;
 }						t_opt;
 
 typedef struct			s_file

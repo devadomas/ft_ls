@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 19:06:25 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 20:01:11 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 		load_offsets(files, options);
 		//printf("Size offset: %d\n", options->size_offset);
 		cpy = files;
+		if (options->long_list)
+			printf("total %d\n", options->total);
 		while (files)
 		{
-			/*printf("filename: %s\n", files->filename);
-			printf("\tdir: %d <-> path: %s\n", files->is_dir, files->path);*/
 			format_output(files, options);
 			files = files->next;
 		}

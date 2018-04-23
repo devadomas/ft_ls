@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 18:54:01 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 19:50:25 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,34 +50,24 @@ static void		print_hard_links(t_file *file, t_opt *options)
 
 static void		print_owner(t_file *file, t_opt *options)
 {
-	struct passwd 	*usr;
-
-	if (!(file->sb))
+	if (!(file->uname))
 	{
 		printf("%*s", options->owner_offset, "unknown"); // make sure about this one
 		return ;
 	}
-	usr = getpwuid((file->sb)->st_uid);
-	if (!usr)
-		return ;
-	printf("%*s", options->owner_offset, usr->pw_name);
+	printf("%*s", options->owner_offset, file->uname);
 	//free(usr);
 }
 
 static void		print_group(t_file *file, t_opt *options)
 {
-	struct group	*usr;
-
-	if (!(file->sb))
+	if (!(file->gname))
 	{
 		printf("%*s", options->group_offset + 1, "unknown");
 		// make sure about this one
 		return ;
 	}
-	usr = getgrgid((file->sb)->st_gid);
-	if (!usr)
-		return ;
-	printf("%*s", options->group_offset + 1, usr->gr_name);
+	printf("%*s", options->group_offset + 1, file->gname);
 	//free(usr);
 }
 
@@ -93,16 +83,19 @@ static void		print_size(t_file *file, t_opt *options)
 
 static void		print_date(t_file *file, t_opt *options)
 {
-	time_t			modified;
+	char			*time_str;
+	char			*formatted;
 
 	(void)options;
-	(void)modified;
 	if (!(file->sb))
 	{
 		printf("XXX XX XX:XX");//to fix
 		return ;
 	}
-	// typed here
+	time_str = ctime(&(file->sb)->st_mtime);
+	formatted = ft_strsub(time_str, 4, 12);
+	printf("%s", formatted);
+	free(formatted);
 }
 
 void			format_output(t_file *file, t_opt *options)

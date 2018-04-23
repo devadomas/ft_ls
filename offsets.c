@@ -6,33 +6,43 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 16:27:16 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 19:07:10 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 20:08:09 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
+static void	add_total(t_file *list, t_opt *options)
+{
+	if (is_file_hidden(list->filename) && !options->include_hidden)
+		return ;
+	options->total += (list->sb)->st_blocks;
+}
+
 void		load_offsets(t_file *list, t_opt *options)
 {
-	int				hlink_offset;
+	int				len;
 	struct stat		*sb;
 
-	hlink_offset = 0;
 	while (list)
 	{
 		sb = list->sb;
 		if (sb)
 		{
-			if (ft_get_nbr_len(sb->st_nlink) > hlink_offset)
-				hlink_offset = ft_get_nbr_len(sb->st_nlink);
-			if (ft_strlen(list->uname) > (size_t)options->owner_offset)
-				options->owner_offset = ft_strlen(list->uname);
-			if (ft_strlen(list->gname) > (size_t)options->group_offset)
-				options->group_offset = ft_strlen(list->gname);
-			if (ft_get_nbr_len(sb->st_size) > options->size_offset)
-				options->size_offset = ft_get_nbr_len(sb->st_size);
+			len = ft_get_nbr_len(sb->st_nlink);
+			if (len > options->hlink_offset)
+				options->hlink_offset = len;
+			len = ft_strlen(list->uname);
+			if (len > options->owner_offset)
+				options->owner_offset = len;
+			len = ft_strlen(list->gname);
+			if (len > options->group_offset)
+				options->group_offset = len;
+			len = ft_get_nbr_len(sb->st_size);
+			if (len > options->size_offset)
+				options->size_offset = len;
+			add_total(list, options);
 		}
 		list = list->next;
 	}
-	options->hlink_offset = hlink_offset;
 }
