@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 17:02:44 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 19:06:09 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ typedef struct			s_file
 	char				*filename;
 	char				*path;
 	int					is_dir;
+	struct stat			*sb;
+	char				*gname;
+	char				*uname;
 	struct s_file		*next;
 }						t_file;
 

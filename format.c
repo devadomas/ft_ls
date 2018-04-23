@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 16:56:44 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:54:01 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,85 +15,94 @@
 
 #include <stdio.h>
 
-static void		print_permissions(char *file_path)
+static void		print_permissions(t_file *file)
 {
-	struct stat		sb;
+	struct stat		*sb;
 
-	if (stat(file_path, &sb) < 0)
+	if (!(file->sb))
 	{
 		printf("----------");
 		return ;
 	}
-	printf((S_ISDIR(sb.st_mode)) ? "d" : "-");
-	printf((sb.st_mode & S_IRUSR) ? "r" : "-");
-	printf((sb.st_mode & S_IWUSR) ? "w" : "-");
-	printf((sb.st_mode & S_IXUSR) ? "x" : "-");
-	printf((sb.st_mode & S_IRGRP) ? "r" : "-");
-	printf((sb.st_mode & S_IWGRP) ? "w" : "-");
-	printf((sb.st_mode & S_IXGRP) ? "x" : "-");
-	printf((sb.st_mode & S_IROTH) ? "r" : "-");
-	printf((sb.st_mode & S_IWOTH) ? "w" : "-");
-	printf((sb.st_mode & S_IXOTH) ? "x" : "-");
+	sb = file->sb;
+	printf((S_ISDIR(sb->st_mode)) ? "d" : "-");
+	printf((sb->st_mode & S_IRUSR) ? "r" : "-");
+	printf((sb->st_mode & S_IWUSR) ? "w" : "-");
+	printf((sb->st_mode & S_IXUSR) ? "x" : "-");
+	printf((sb->st_mode & S_IRGRP) ? "r" : "-");
+	printf((sb->st_mode & S_IWGRP) ? "w" : "-");
+	printf((sb->st_mode & S_IXGRP) ? "x" : "-");
+	printf((sb->st_mode & S_IROTH) ? "r" : "-");
+	printf((sb->st_mode & S_IWOTH) ? "w" : "-");
+	printf((sb->st_mode & S_IXOTH) ? "x" : "-");
 	printf(" "); // don't know if is needed for @ tag
 }
 
-static void		print_hard_links(char *file_path, t_opt *options)
+static void		print_hard_links(t_file *file, t_opt *options)
 {
-	struct stat		sb;
-
-	if (stat(file_path, &sb) < 0)
+	if (!(file->sb))
 	{
 		printf("%*d", options->hlink_offset, 0);
 		return ;
 	}
-	printf("%*d", options->hlink_offset, sb.st_nlink);
+	printf("%*d", options->hlink_offset, (file->sb)->st_nlink);
 }
 
-static void		print_owner(char *file_path, t_opt *options)
+static void		print_owner(t_file *file, t_opt *options)
 {
-	struct stat		sb;
 	struct passwd 	*usr;
 
-	if (stat(file_path, &sb) < 0)
+	if (!(file->sb))
 	{
 		printf("%*s", options->owner_offset, "unknown"); // make sure about this one
 		return ;
 	}
-	usr = getpwuid(sb.st_uid);
+	usr = getpwuid((file->sb)->st_uid);
 	if (!usr)
 		return ;
 	printf("%*s", options->owner_offset, usr->pw_name);
 	//free(usr);
 }
 
-static void		print_group(char *file_path, t_opt *options)
+static void		print_group(t_file *file, t_opt *options)
 {
-	struct stat		sb;
 	struct group	*usr;
 
-	if (stat(file_path, &sb) < 0)
+	if (!(file->sb))
 	{
 		printf("%*s", options->group_offset + 1, "unknown");
 		// make sure about this one
 		return ;
 	}
-	usr = getgrgid(sb.st_gid);
+	usr = getgrgid((file->sb)->st_gid);
 	if (!usr)
 		return ;
 	printf("%*s", options->group_offset + 1, usr->gr_name);
 	//free(usr);
 }
 
-static void		print_size(char *file_path, t_opt *options)
+static void		print_size(t_file *file, t_opt *options)
 {
-	struct stat		sb;
-
-	if (stat(file_path, &sb) < 0)
+	if (!(file->sb))
 	{
 		printf("%*d", options->size_offset + 1, 0);
 		return ;
 	}
-	printf("%*lld", options->size_offset + 1, sb.st_size);
+	printf("%*lld", options->size_offset + 1, (file->sb)->st_size);
+}
+
+static void		print_date(t_file *file, t_opt *options)
+{
+	time_t			modified;
+
+	(void)options;
+	(void)modified;
+	if (!(file->sb))
+	{
+		printf("XXX XX XX:XX");//to fix
+		return ;
+	}
+	// typed here
 }
 
 void			format_output(t_file *file, t_opt *options)
@@ -102,15 +111,18 @@ void			format_output(t_file *file, t_opt *options)
 		return ;
 	if (options->long_list) /* formatting -l option */
 	{
-		print_permissions(file->path);
+		print_permissions(file);
 		printf(" ");
-		print_hard_links(file->path, options);
+		print_hard_links(file, options);
 		printf(" ");
-		print_owner(file->path, options);
+		print_owner(file, options);
 		printf(" ");
-		print_group(file->path, options);
+		print_group(file, options);
 		printf(" ");
-		print_size(file->path, options);
+		print_size(file, options);
+		printf(" ");
+		print_date(file, options);
+
 		printf(" %s\n", file->filename);
 	}
 }
