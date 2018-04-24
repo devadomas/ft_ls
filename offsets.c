@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 16:27:16 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 21:30:40 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 22:23:45 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ void		load_offsets(t_file *list, t_opt *options)
 			if (len > options->size_offset)
 				options->size_offset = len;
 			len = ft_strlen(list->filename);
-			if (len > options->title_offset) /* if its not tmp and t.t. FIX */
-				options->title_offset = len;
+			if (!(is_file_hidden(list->filename) && !(options->include_hidden)))
+				if (len > options->title_offset)
+					options->title_offset = len;
 			add_total(list, options);
 		}
 		list = list->next;
