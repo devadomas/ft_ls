@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 22:28:40 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 22:36:56 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 		
 		load_offsets(files, options);
 		
-		if (options->long_list)
-			printf("total %d\n", options->total);
 		format_output(files, options);
 		
 		if (options->rec)
