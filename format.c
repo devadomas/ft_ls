@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 22:07:30 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 22:19:28 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,29 +114,39 @@ static void		print_date(t_file *file, t_opt *options)
 	}
 }
 
-void			format_output(t_file *file, t_opt *options)
+static void		format_long(t_file *files, t_opt *options)
 {
-	if (is_file_hidden(file->filename) && !(options->include_hidden))
-		return ;
-	if (options->long_list) /* formatting -l option */
+	while (files)
 	{
-		print_permissions(file);
-		printf(" ");
-		print_hard_links(file, options);
-		printf(" ");
-		print_owner(file, options);
-		printf(" ");
-		print_group(file, options);
-		printf(" ");
-		print_size(file, options);
-		printf(" ");
-		print_date(file, options);
+		if (!(is_file_hidden(files->filename) && !(options->include_hidden)))
+		{
+			print_permissions(files);
+			printf(" ");
+			print_hard_links(files, options);
+			printf(" ");
+			print_owner(files, options);
+			printf(" ");
+			print_group(files, options);
+			printf(" ");
+			print_size(files, options);
+			printf(" ");
+			print_date(files, options);
 
-		printf(" %s\n", file->filename);
+			printf(" %s\n", files->filename);
+		}
+		files = files->next;
 	}
+}
+
+void			format_output(t_file *files, t_opt *options)
+{
+	if (options->long_list) /* formatting -l option */
+		format_long(files, options);
 	else 
 	{
 		printf("widht: %d | can fit: %d\n", (options->window)->ws_col,
 				(options->window)->ws_col / options->title_offset);
 	}
 }
+
+

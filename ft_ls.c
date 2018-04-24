@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 22:10:49 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 22:18:24 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 	DIR				*dir;
 	struct dirent	*dp;
 	t_file			*files;
-	t_file			*cpy;
 
 	dir = opendir(path);
 	files = NULL;
@@ -52,21 +51,21 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 		options->count++;
 		while ((dp = readdir(dir)) != NULL)
 			file_push(&files, init_file(dp->d_name, path));
+		
 		sort_files_byname(&files, (options->reversed ? TRUE : FALSE));
+		
 		load_offsets(files, options);
 		ioctl(STDOUT_FILENO, TIOCGWINSZ, options->window); //maybe move to offst
+		
 		printf("Size offset: %d\n", options->title_offset);
-		cpy = files;
+		
 		if (options->long_list)
 			printf("total %d\n", options->total);
-		while (files)
-		{
-			format_output(files, options);
-			files = files->next;
-		}
+		format_output(files, options);
+		
 		if (options->rec)
-			call_recursive(cpy, options);
-		clean_files_memory(cpy, options);
+			call_recursive(files, options);
+		clean_files_memory(files, options);
 		closedir(dir);
 	}
 }

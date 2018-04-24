@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 21:37:19 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 22:16:49 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int			load_options(t_opt *options, int ac, char **av);
 void		print_error(const char *filename);
 void		file_push(t_file **list, t_file *file);
 t_file		*init_file(const char *filename, const char *path);
-void		format_output(t_file *file, t_opt *options);
+void		format_output(t_file *files, t_opt *options);
 t_bool		is_file_hidden(const char *filename);
 void		sort_files_byname(t_file **files, t_bool reversed);
 void		load_offsets(t_file *list, t_opt *options);
