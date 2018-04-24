@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 09:50:58 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 12:21:11 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,23 @@ static void		print_date(t_file *file, t_opt *options)
 	}
 	time(&now);
 	time_str = ctime(&(file->sb)->st_mtime);
-	formatted = ft_strsub(time_str, 4, 12);
-	//printf("%s", formatted);
-	printf(" %ld ", (file->sb)->st_mtime);
-/*
- * TODO: do math for showing the date
-*/
-	free(formatted);
+	// time_str example: "Mon Apr 23 20:10:38 2018\n"
+	if (ABS(now - (file->sb)->st_mtime) > 13132800)
+	{
+		formatted = ft_strsub(time_str, 4, 7);
+		printf("%s", formatted);
+		free(formatted);
+		formatted = ft_strsub(time_str, 20, 4);
+		printf("%5s", formatted); /* don't know if gap needed - date len (5) */
+		free(formatted);
+		//printf("half year ago/present");
+	}
+	else
+	{
+		formatted = ft_strsub(time_str, 4, 12);
+		printf("%s", formatted);
+		free(formatted);
+	}
 }
 
 void			format_output(t_file *file, t_opt *options)

@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 09:34:58 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 12:10:37 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <uuid/uuid.h>
 # define TRUE		1
 # define FALSE		0
-
+# define ABS(Value) (Value < 0 ? -Value : Value)
 typedef int t_bool;
 
 typedef struct			s_opt
