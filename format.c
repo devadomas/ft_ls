@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 20:21:14 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 09:50:58 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static void		print_size(t_file *file, t_opt *options)
 
 static void		print_date(t_file *file, t_opt *options)
 {
+	time_t			now;
 	char			*time_str;
 	char			*formatted;
 
@@ -92,10 +93,14 @@ static void		print_date(t_file *file, t_opt *options)
 		printf("XXX XX XX:XX");//to fix
 		return ;
 	}
+	time(&now);
 	time_str = ctime(&(file->sb)->st_mtime);
 	formatted = ft_strsub(time_str, 4, 12);
 	//printf("%s", formatted);
 	printf(" %ld ", (file->sb)->st_mtime);
+/*
+ * TODO: do math for showing the date
+*/
 	free(formatted);
 }
 

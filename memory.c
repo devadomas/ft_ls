@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/13 09:43:13 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 09:43:27 by azaliaus         ###   ########.fr       */
+/*   Created: 2018/04/24 09:30:49 by azaliaus          #+#    #+#             */
+/*   Updated: 2018/04/24 09:35:30 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include <stdlib.h>
 
-#include <unistd.h>
-
-int		main(int ac, char **av)
+void		clean_memory(t_file *files, t_opt *options)
 {
-	ft_ls(ac, av);
-	return (0);
+	t_file *file;
+
+	if (options)
+		free(options);
+	while (files)
+	{
+		free(files->filename);
+		free(files->path);
+		free(files->sb);
+		free(files->gname);
+		free(files->uname);
+		file = files;
+		files = files->next;
+		free(file);
+	}
 }

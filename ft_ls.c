@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 21:29:51 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 09:50:49 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 		}
 		if (options->rec)
 			call_recursive(cpy, options);
+		clean_memory(cpy, options);
 		closedir(dir);
 	}
 }
@@ -78,6 +79,7 @@ void			ft_ls(int ac, char **av)
 	printf("Reversed: %d\n", options->reversed);
 	printf("Sorted t: %d\n", options->sorted_t);
 	printf("---\n");*/
+
 	if (start_point == ac)
 		read_dir(".", ".", options);
 	else
@@ -90,20 +92,3 @@ void			ft_ls(int ac, char **av)
 		}
 	}
 }
-
-/*(void)ac;
-	(void)av;
-	DIR				*dir;
-	struct dirent	*dp;
-	//struct stat		sb;
-
-	dir = opendir(".");
-	if (!dir)
-		return ;
-	while ((dp = readdir(dir)))
-	{
-		print("File: %s | ", dp->d_name);
-		print_permissions(dp->d_name);
-	}
-	(void)closedir(dir);
-*/

@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 21:29:16 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 09:34:58 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ void		format_output(t_file *file, t_opt *options);
 t_bool		is_file_hidden(const char *filename);
 void		sort_files_byname(t_file **files, t_bool reversed);
 void		load_offsets(t_file *list, t_opt *options);
+void		clean_memory(t_file *files, t_opt *options);
 
 #endif
