@@ -6,11 +6,12 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 16:27:16 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 22:23:45 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 22:28:13 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include <unistd.h>
 
 static void	add_total(t_file *list, t_opt *options)
 {
@@ -24,6 +25,9 @@ void		load_offsets(t_file *list, t_opt *options)
 	int				len;
 	struct stat		*sb;
 
+	if (!options)
+		return ;
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, options->window);
 	while (list)
 	{
 		sb = list->sb;

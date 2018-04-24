@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 22:18:24 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 22:28:40 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,6 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 		sort_files_byname(&files, (options->reversed ? TRUE : FALSE));
 		
 		load_offsets(files, options);
-		ioctl(STDOUT_FILENO, TIOCGWINSZ, options->window); //maybe move to offst
-		
-		printf("Size offset: %d\n", options->title_offset);
 		
 		if (options->long_list)
 			printf("total %d\n", options->total);
