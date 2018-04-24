@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:26:55 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 21:29:26 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 21:33:58 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_opt			*init_opt(void)
 	t_opt		*ret;
 
 	if (!(ret = (t_opt *)malloc(sizeof(t_opt))))
+		return (0);
+	if (!(ret->window = (struct winsize *)malloc(sizeof(struct winsize))))
 		return (0);
 	ret->rec = 0;
 	ret->long_list = 0;
@@ -54,7 +56,7 @@ int			load_options(t_opt *options, int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (av[i][0] != '-')
+		if (av[i][0] != '-' || (av[i][0] == '-' && ft_strlen(av[i]) < 2))
 			break ;
 		else
 			parse_options(options, av[i]); 

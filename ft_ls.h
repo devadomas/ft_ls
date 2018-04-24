@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 12:10:37 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 21:37:19 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <grp.h>
 # include <time.h>
 # include <uuid/uuid.h>
+# include <sys/xattr.h>
+/* Kernel interface */
+# include <sys/ioctl.h>
 # define TRUE		1
 # define FALSE		0
 # define ABS(Value) (Value < 0 ? -Value : Value)
@@ -40,6 +43,7 @@ typedef struct			s_opt
 	int					size_offset;
 	int					title_offset;
 	int					total;
+	struct winsize		*window;
 }						t_opt;
 
 typedef struct			s_file
@@ -63,6 +67,7 @@ void		format_output(t_file *file, t_opt *options);
 t_bool		is_file_hidden(const char *filename);
 void		sort_files_byname(t_file **files, t_bool reversed);
 void		load_offsets(t_file *list, t_opt *options);
-void		clean_memory(t_file *files, t_opt *options);
+void		clean_files_memory(t_file *files, t_opt *options);
+void		clean_options_memory(t_opt *options);
 
 #endif

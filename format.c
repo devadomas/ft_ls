@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 12:21:11 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 22:07:30 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@
 static void		print_permissions(t_file *file)
 {
 	struct stat		*sb;
+	ssize_t xattr;
 
 	if (!(file->sb))
 	{
 		printf("----------");
 		return ;
 	}
+	xattr = 0;
 	sb = file->sb;
 	printf((S_ISDIR(sb->st_mode)) ? "d" : "-");
 	printf((sb->st_mode & S_IRUSR) ? "r" : "-");
@@ -35,7 +37,8 @@ static void		print_permissions(t_file *file)
 	printf((sb->st_mode & S_IROTH) ? "r" : "-");
 	printf((sb->st_mode & S_IWOTH) ? "w" : "-");
 	printf((sb->st_mode & S_IXOTH) ? "x" : "-");
-	printf(" "); // don't know if is needed for @ tag
+	xattr = listxattr(file->path, NULL, 0, XATTR_NOFOLLOW);
+	printf((xattr == 0 ? " " : "@"));
 }
 
 static void		print_hard_links(t_file *file, t_opt *options)
@@ -56,7 +59,6 @@ static void		print_owner(t_file *file, t_opt *options)
 		return ;
 	}
 	printf("%*s", options->owner_offset, file->uname);
-	//free(usr);
 }
 
 static void		print_group(t_file *file, t_opt *options)
@@ -68,7 +70,6 @@ static void		print_group(t_file *file, t_opt *options)
 		return ;
 	}
 	printf("%*s", options->group_offset + 1, file->gname);
-	//free(usr);
 }
 
 static void		print_size(t_file *file, t_opt *options)
@@ -104,7 +105,6 @@ static void		print_date(t_file *file, t_opt *options)
 		formatted = ft_strsub(time_str, 20, 4);
 		printf("%5s", formatted); /* don't know if gap needed - date len (5) */
 		free(formatted);
-		//printf("half year ago/present");
 	}
 	else
 	{
@@ -133,5 +133,10 @@ void			format_output(t_file *file, t_opt *options)
 		print_date(file, options);
 
 		printf(" %s\n", file->filename);
+	}
+	else 
+	{
+		printf("widht: %d | can fit: %d\n", (options->window)->ws_col,
+				(options->window)->ws_col / options->title_offset);
 	}
 }

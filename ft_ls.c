@@ -6,11 +6,13 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 09:50:49 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/24 22:10:49 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 #include <stdio.h>
 
@@ -22,7 +24,12 @@ static void		call_recursive(t_file *files, t_opt *options)
 	{
 		if (files->is_dir && (ft_strcmp(files->filename, ".") &&
 						ft_strcmp(files->filename, "..")))
-			read_dir(files->filename, files->path, options);
+		{
+			if (options->include_hidden)
+				read_dir(files->filename, files->path, options);
+			else if (!is_file_hidden(files->filename))
+				read_dir(files->filename, files->path, options);
+		}
 		files = files->next;
 	}
 }
@@ -47,6 +54,7 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 			file_push(&files, init_file(dp->d_name, path));
 		sort_files_byname(&files, (options->reversed ? TRUE : FALSE));
 		load_offsets(files, options);
+		ioctl(STDOUT_FILENO, TIOCGWINSZ, options->window); //maybe move to offst
 		printf("Size offset: %d\n", options->title_offset);
 		cpy = files;
 		if (options->long_list)
@@ -58,7 +66,7 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 		}
 		if (options->rec)
 			call_recursive(cpy, options);
-		clean_memory(cpy, options);
+		clean_files_memory(cpy, options);
 		closedir(dir);
 	}
 }
@@ -67,6 +75,7 @@ void			ft_ls(int ac, char **av)
 {
 	t_opt	*options;
 	int		start_point;
+	char	*path;
 
 	options = init_opt();
 	start_point = load_options(options, ac, av);
@@ -79,16 +88,16 @@ void			ft_ls(int ac, char **av)
 	printf("Reversed: %d\n", options->reversed);
 	printf("Sorted t: %d\n", options->sorted_t);
 	printf("---\n");*/
-
 	if (start_point == ac)
 		read_dir(".", ".", options);
 	else
 	{
 		while (start_point < ac)
 		{
-			char *path;
 			path = ft_strjoin_conn(".", av[start_point], '/');
 			read_dir(av[start_point++], path, options);
+			free(path);
 		}
 	}
+	clean_options_memory(options);
 }
