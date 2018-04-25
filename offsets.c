@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 16:27:16 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 22:28:13 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 13:37:29 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void		load_offsets(t_file *list, t_opt *options)
 	while (list)
 	{
 		sb = list->sb;
-		if (sb)
+		if (sb &&
+				!(is_file_hidden(list->filename) && !(options->include_hidden)))
 		{
 			len = ft_get_nbr_len(sb->st_nlink);
 			if (len > options->hlink_offset)

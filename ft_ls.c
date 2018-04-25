@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 22:36:56 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 13:41:38 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 			printf("\n%s:\n", path);
 		options->count++;
 		while ((dp = readdir(dir)) != NULL)
-			file_push(&files, init_file(dp->d_name, path));
+			file_push(&files, init_file(dp->d_name, path, options));
 		
 		sort_files_byname(&files, (options->reversed ? TRUE : FALSE));
 		
@@ -71,7 +71,7 @@ void			ft_ls(int ac, char **av)
 	int		start_point;
 	char	*path;
 
-	options = init_opt();
+	options = init_opt(); // TODO: double --l - illegal option create usage
 	start_point = load_options(options, ac, av);
 
 	/*printf("Starting point: %d\n", start_point);
@@ -94,4 +94,5 @@ void			ft_ls(int ac, char **av)
 		}
 	}
 	clean_options_memory(options);
+	//pause();
 }

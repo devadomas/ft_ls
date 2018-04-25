@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:26:55 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 21:33:58 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 13:53:47 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,39 @@ t_opt			*init_opt(void)
 	ret->size_offset = 0;
 	ret->title_offset = 0;
 	ret->total = 0;
+	if (!(ret->charset = ft_strdup("alR")))
+		return (0);
 	return (ret);
+}
+
+static void	check_charset(const char *str, t_opt *options)
+{
+	int		i;
+	int		found;
+	char	*charset;
+
+	charset = options->charset;
+	while (*str)
+	{
+		i = 0;
+		found = 0;
+		while (charset[i])
+		{
+			if (*str == charset[i])
+				found = 1;
+			i++;
+		}
+		if (!found)
+			print_usage(*str, options);
+		str++;
+	}
 }
 
 static void	parse_options(t_opt *ret, char *str)
 {
 	while (*str)
 	{
+		check_charset((str + 1), ret);
 		ret->rec = (*str == 'R' ? 1 : ret->rec);
 		ret->long_list = (*str == 'l' ? 1 : ret->long_list);
 		ret->include_hidden = (*str == 'a' ? 1 : ret->include_hidden);

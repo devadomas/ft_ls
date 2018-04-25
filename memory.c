@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:30:49 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 21:36:59 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 11:51:32 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void		clean_files_memory(t_file *files, t_opt *options)
 		free(files->sb);
 		free(files->gname);
 		free(files->uname);
+		free(files->symlink);
 		file = files;
 		files = files->next;
 		free(file);

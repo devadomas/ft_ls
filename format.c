@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/24 22:51:28 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 13:33:01 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ static void		print_permissions(t_file *file)
 	}
 	xattr = 0;
 	sb = file->sb;
-	printf((S_ISDIR(sb->st_mode)) ? "d" : "-");
+	if (S_ISDIR(sb->st_mode))
+		printf("d");
+	else
+		printf((file->symlink ? "l" : "-"));
 	printf((sb->st_mode & S_IRUSR) ? "r" : "-");
 	printf((sb->st_mode & S_IWUSR) ? "w" : "-");
 	printf((sb->st_mode & S_IXUSR) ? "x" : "-");
@@ -132,7 +135,10 @@ static void		format_long(t_file *files, t_opt *options)
 			printf(" ");
 			print_date(files, options);
 
-			printf(" %s\n", files->filename);
+			printf(" %s", files->filename);
+			if (files->symlink)
+				printf(" -> %s", files->symlink);
+			printf("\n");
 		}
 		files = files->next;
 	}
@@ -140,18 +146,27 @@ static void		format_long(t_file *files, t_opt *options)
 
 static void		format_cols(t_file *files, t_opt *options, int cols)
 {
-	int i;
-	int j;
-	int len;
+	int		i;
+	int		j;
+	int		len;
+	int		index;
+	t_file	*file;
 
 	i = 0;
-	len = 0;
-	(void)options;
-	(void)files;
-	while (i++ < cols)
+	len = get_file_list_len(files, options->include_hidden);
+	//printf("Calculus: %d\n", len / cols);
+	while (i++ <= len / cols)
 	{
 		j = 0;
-		printf("Col col col\n");
+		while (j++ < cols)
+		{
+			index = (i - 1) + (j - 1) * (len / cols + 1);
+			file = get_nth_file(files, index, options->include_hidden);
+			if (!file) /* Not sure */
+				break ;
+			printf("%-*s", options->title_offset + 1, file->filename);
+		}
+		printf("\n");
 	}
 }
 
@@ -167,9 +182,7 @@ void			format_output(t_file *files, t_opt *options)
 	else 
 	{
 		cols = (options->window)->ws_col / options->title_offset;
-		printf("widht: %d | can fit: %d\n", (options->window)->ws_col, cols);
+		//printf("widht: %d | can fit: %d\n", (options->window)->ws_col, cols);
 		format_cols(files, options, cols);
 	}
 }
-
-

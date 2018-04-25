@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:34:41 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/23 16:17:21 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 11:00:18 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,34 @@ void			sort_files_byname(t_file **files, t_bool reverse)
 			}
 		}
 	}
+}
+
+int				get_file_list_len(t_file *files, int hidden)
+{
+	int i;
+
+	i = 0;
+	while (files)
+	{
+		if (!(is_file_hidden(files->filename) && !(hidden)))
+			i++;
+		files = files->next;
+	}
+	return (i);
+}
+
+t_file			*get_nth_file(t_file *files, unsigned int nth, int hidden)
+{
+	unsigned int		i;
+
+	i = -1;
+	while (files)
+	{
+		if (!(is_file_hidden(files->filename) && !(hidden)))
+			i++;
+		if (i == nth)
+			return (files);
+		files = files->next;
+	}
+	return (NULL);
 }
