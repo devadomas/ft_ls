@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:26:55 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 17:03:14 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 21:52:40 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_opt			*init_opt(void)
 	ret->include_hidden = 0;
 	ret->reversed = 0;
 	ret->sorted_t = 0;
+	ret->one = 0;
 	ret->count = 0;
 	ret->hlink_offset = 0;
 	ret->owner_offset = 0;
@@ -33,7 +34,7 @@ t_opt			*init_opt(void)
 	ret->size_offset = 0;
 	ret->title_offset = 0;
 	ret->total = 0;
-	if (!(ret->charset = ft_strdup("alrR")))
+	if (!(ret->charset = ft_strdup("1alrRt")))
 	{
 		free(ret->window);
 		free(ret);
@@ -75,6 +76,7 @@ static void	parse_options(t_opt *ret, char *str)
 		ret->include_hidden = (*str == 'a' ? 1 : ret->include_hidden);
 		ret->reversed = (*str == 'r' ? 1 : ret->reversed);
 		ret->sorted_t = (*str == 't' ? 1 : ret->sorted_t);
+		ret->one = (*str == '1' ? 1 : ret->one);
 		str++;
 	}
 }

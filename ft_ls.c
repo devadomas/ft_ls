@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 15:07:15 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 18:55:51 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,14 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 		while ((dp = readdir(dir)) != NULL)
 			file_push(&files, init_file(dp->d_name, path, options));
 		
-		sort_files_byname(&files, (options->reversed ? TRUE : FALSE));
-		
+		if (options->sorted_t)
+			sort_files_bytime(&files);
+		else
+			sort_files_byname(&files, (options->reversed ? TRUE : FALSE));
+	
+		if (options->reversed)
+			reverse_files_list(&files);
+
 		load_offsets(files, options);
 		
 		format_output(files, options);

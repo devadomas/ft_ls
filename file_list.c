@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:34:41 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 17:08:06 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 19:02:12 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,7 @@ void			sort_files_byname(t_file **files, t_bool reverse)
 		next = curr->next;
 		while (next)
 		{
-			if (ft_strcmp(curr->filename, next->filename) > 0 && !reverse)
-				swap_node(files, &prev, &curr, &next);
-			else if (ft_strcmp(curr->filename, next->filename) < 0 && reverse)
+			if (ft_strcmp(curr->filename, next->filename) > 0)
 				swap_node(files, &prev, &curr, &next);
 			else
 			{
@@ -70,6 +68,57 @@ void			sort_files_byname(t_file **files, t_bool reverse)
 			}
 		}
 	}
+}
+
+void			sort_files_bytime(t_file **files)
+{
+	int			i;
+	t_file		*prev;
+	t_file		*curr;
+	t_file		*next;
+	int			len;
+
+	if (!(*files))
+		return ;
+	i = -1;
+	len = file_list_len(*files);
+	while (++i < len)
+	{
+		prev = 0;
+		curr = *files;
+		next = curr->next;
+		while (next)
+		{
+			if ((curr->sb)->st_mtime < (next->sb)->st_mtime)
+				swap_node(files, &prev, &curr, &next);
+			else
+			{
+				prev = curr;
+				curr = curr->next;
+				next = curr->next;
+			}
+		}
+	}
+}
+
+void			reverse_files_list(t_file **files)
+{
+	t_file		*curr;
+	t_file		*prev;
+	t_file		*next;
+
+	prev = NULL;
+	next = *files;
+	if (!next)
+		return ;
+	while (next)
+	{
+		curr = next;
+		next = curr->next;
+		curr->next = prev;
+		prev = curr;
+	}
+	*files = curr;
 }
 
 int				get_file_list_len(t_file *files, int hidden)
