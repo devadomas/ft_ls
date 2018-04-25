@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:55:40 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 13:48:21 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 15:07:37 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ void		print_usage(const char option, t_opt *options)
 {
 	printf("ft_ls: illegal option -- %c\n", option);
 	printf("usage: ft_ls [-%s] [file ...]\n", options->charset);
+	free(options);
 	exit(1);
 }

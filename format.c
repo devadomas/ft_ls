@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 13:33:01 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 15:33:39 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,16 @@ static void		format_cols(t_file *files, t_opt *options, int cols)
 	}
 }
 
+void		format_simple(t_file *files, t_opt *options)
+{
+	while (files)
+	{
+		if (!(is_file_hidden(files->filename) && !(options->include_hidden)))
+			printf("%s\n", files->filename);
+		files = files->next;
+	}
+}
+
 void			format_output(t_file *files, t_opt *options)
 {
 	int cols;
@@ -184,5 +194,7 @@ void			format_output(t_file *files, t_opt *options)
 		cols = (options->window)->ws_col / options->title_offset;
 		//printf("widht: %d | can fit: %d\n", (options->window)->ws_col, cols);
 		format_cols(files, options, cols);
+		(void)format_simple;
+		//format_simple(files, options);
 	}
 }

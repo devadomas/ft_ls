@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:30:49 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 11:51:32 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 13:55:26 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void		clean_options_memory(t_opt *options)
 {
 	if (!options)
 		return ;
+	free(options->charset);
 	free(options->window);
 	free(options);
 }

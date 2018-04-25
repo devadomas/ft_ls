@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 11:01:13 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 13:22:31 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 15:38:45 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,19 @@
 static char	*get_symlink(const char *path, t_opt *options, t_file *file)
 {
 	struct stat		sb;
-	long long		size;
 	char			*ret;
 
 	(void)file;
-	if (stat(path, &sb) == 0)
+	if (lstat(path, &sb) == 0)
 	{
 		ret = (char *)malloc(sizeof(char) * sb.st_size + 1);
 		if (!ret)
 			return (NULL);
 		readlink(path, ret, sb.st_size + 1);
 		ret[sb.st_size] = '\0';
-		size = sb.st_blocks;
 		if (stat(ret, &sb) == 0)
 		{
-			options->total += size;
+			options->total += sb.st_blocks;
 			//(file->sb)->st_size += sb.st_size;
 			return (ret);
 		}

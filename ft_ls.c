@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 13:41:38 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 15:07:15 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void			ft_ls(int ac, char **av)
 	int		start_point;
 	char	*path;
 
-	options = init_opt(); // TODO: double --l - illegal option create usage
+	options = init_opt();
 	start_point = load_options(options, ac, av);
 
 	/*printf("Starting point: %d\n", start_point);

@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:26:55 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 13:53:47 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 15:06:21 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ t_opt			*init_opt(void)
 	ret->title_offset = 0;
 	ret->total = 0;
 	if (!(ret->charset = ft_strdup("alR")))
+	{
+		free(ret->window);
+		free(ret);
 		return (0);
+	}
 	return (ret);
 }
 
