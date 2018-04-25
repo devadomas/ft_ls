@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 11:01:13 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 15:38:45 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 16:58:45 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static char	*get_symlink(const char *path, t_opt *options, t_file *file)
 			//(file->sb)->st_size += sb.st_size;
 			return (ret);
 		}
+		if (ft_strlen(ret) > 0)
+			return (ret);
 		free(ret);
 	}
 	return (NULL);

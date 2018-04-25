@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:34:41 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 11:00:18 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/25 17:08:06 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ void			sort_files_byname(t_file **files, t_bool reverse)
 		next = curr->next;
 		while (next)
 		{
-			if (ft_strcmp(curr->filename, next->filename) > 0)
+			if (ft_strcmp(curr->filename, next->filename) > 0 && !reverse)
+				swap_node(files, &prev, &curr, &next);
+			else if (ft_strcmp(curr->filename, next->filename) < 0 && reverse)
 				swap_node(files, &prev, &curr, &next);
 			else
 			{
