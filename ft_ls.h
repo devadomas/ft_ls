@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/26 14:35:46 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 16:58:07 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define TRUE		1
 # define FALSE		0
 # define ABS(Value) (Value < 0 ? -Value : Value)
+
+# define LINK_BUFF		512
 
 #define COLOR_RED     "\x1b[31m"
 #define COLOR_GREEN   "\x1b[32m"

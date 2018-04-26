@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/26 15:53:05 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 17:04:53 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 		
 		if (options->rec)
 			call_recursive(files, options);
-		clean_files_memory(files, options);
+		clean_files_memory(files, options); // symlink segfaults
 		closedir(dir);
 	}
 }

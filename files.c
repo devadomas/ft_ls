@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 11:01:13 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/26 13:57:20 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 16:58:53 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,28 @@
 
 #include <stdio.h>
 
-static char	*get_symlink(const char *path, t_opt *options, t_file *file)
+static char	*get_symlink(const char *path, t_opt *options)
 {
 	struct stat		sb;
 	char			*ret;
+	int				len;
 
-	(void)file;
 	if (lstat(path, &sb) == 0)
 	{
-		ret = (char *)malloc(sizeof(char) * sb.st_size + 1);
+		ret = (char *)malloc(sizeof(char) * LINK_BUFF + 1);
 		if (!ret)
 			return (NULL);
-		readlink(path, ret, sb.st_size + 1);
-		ret[sb.st_size] = '\0';
+		if ((len = readlink(path, ret, LINK_BUFF + 1)) == -1)
+		{
+			free(ret);
+			return (NULL);
+		}
+		ret[len] = '\0';
 		if (stat(ret, &sb) == 0)
 		{
 			options->total += sb.st_blocks;
-			//(file->sb)->st_size += sb.st_size;
 			return (ret);
 		}
-		if (ft_strlen(ret) > 0)
-			return (ret);
 		free(ret);
 	}
 	return (NULL);
@@ -65,10 +66,13 @@ t_file		*init_file(const char *filename, const char *path, t_opt *options)
 				ft_convert_to_base(sb->st_gid, 10));
 		ret->uname = (usr ? ft_strdup(usr->pw_name) :
 				ft_convert_to_base(sb->st_uid, 10));
-		ret->symlink = get_symlink(ret->path, options, ret);
+		ret->symlink = get_symlink(ret->path, options);
 	}
 	else
-		ret->is_dir = 0;
+	{
+		free(ret);
+		return (NULL);
+	}
 	ret->next = NULL;
 	return (ret);
 }
