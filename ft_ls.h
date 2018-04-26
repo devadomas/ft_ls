@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 22:41:04 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:35:46 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <sys/xattr.h>
 /* Kernel interface */
 # include <sys/ioctl.h>
+# include <errno.h>
+
 # define TRUE		1
 # define FALSE		0
 # define ABS(Value) (Value < 0 ? -Value : Value)
@@ -53,6 +55,7 @@ typedef struct			s_opt
 	int					size_offset;
 	int					title_offset;
 	int					total;
+	int					total_files;
 	char				*charset;
 	struct winsize		*window;
 }						t_opt;
@@ -87,5 +90,6 @@ t_file		*get_nth_file(t_file *files, unsigned int nth, int hidden);
 void		print_usage(const char option, t_opt *options);
 void		reverse_files_list(t_file **files);
 int			ft_floor(float nbr);
+int			ft_floor_up(float nbr);
 
 #endif

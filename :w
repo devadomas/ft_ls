@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/26 15:53:05 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:36:03 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,6 @@
 #include <stdlib.h>
 
 #include <stdio.h>
-/*
- *
- * TODO: fix random soft link apperance in /etc
- * TODO: if passing file without /, just display info about that file
- *
- */
 
 static void		read_dir(const char *filename, const char *path, t_opt *options);
 
@@ -48,11 +42,11 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 
 	dir = opendir(path);
 	files = NULL;
+	
 	if (options->count != 0)
 		printf("\n");
 	if (options->total_files > 0) // moved from else
-		//printf("%s:\n", (path[0] == '.' ? filename : path));
-		printf("%s:\n", path);
+		printf("%s:\n", (path[0] == '.' && !(options->count) ? filename : path));
 	if (!dir)
 		print_error(filename);
 	else
@@ -89,7 +83,7 @@ void			ft_ls(int ac, char **av)
 
 	options = init_opt();
 	start_point = load_options(options, ac, av);
-	options->total_files = ac - start_point - 1;
+	options->total_files = start_point - ac;
 	/*printf("Starting point: %d\n", start_point);
 	printf("---\nLoaded options:\n");
 	printf("Recursive: %d\n", options->rec);

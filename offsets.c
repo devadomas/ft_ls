@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 16:27:16 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 13:37:29 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 13:48:49 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void		load_offsets(t_file *list, t_opt *options)
 			len = ft_get_nbr_len(sb->st_nlink);
 			if (len > options->hlink_offset)
 				options->hlink_offset = len;
-			len = ft_strlen(list->uname);
+			len = (list->uname ? ft_strlen(list->uname) : 0);
 			if (len > options->owner_offset)
 				options->owner_offset = len;
-			len = ft_strlen(list->gname);
+			len = (list->gname ? ft_strlen(list->gname) : 0);
 			if (len > options->group_offset)
 				options->group_offset = len;
 			len = ft_get_nbr_len(sb->st_size);

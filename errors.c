@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:55:40 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 15:07:37 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 12:12:37 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,13 @@
 
 void		print_error(const char *filename)
 {
-	printf("ft_ls: %s: No such file or directory\n", filename);
+	char		*error;
+
+	error = strerror(errno);
+	//perror(error);
+	//printf("%d <-> %s\n", errno, error);
+	if (errno != 20)
+		printf("ft_ls: %s: %s\n", filename, error);
 }
 
 void		print_usage(const char option, t_opt *options)

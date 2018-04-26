@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 11:01:13 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 16:58:45 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 13:57:20 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_file		*init_file(const char *filename, const char *path, t_opt *options)
 	if (!ret || !(ret->filename = ft_strdup(filename)) ||
 			!(ret->path = ft_strjoin_conn(path, filename, '/')) ||
 			!(sb = (struct stat *)malloc(sizeof(struct stat))))
-		return (NULL);
+		return (NULL);	
 	if (lstat(ret->path, sb) == 0)
 	{
 		ret->sb = sb;
@@ -61,8 +61,10 @@ t_file		*init_file(const char *filename, const char *path, t_opt *options)
 			ret->is_dir = (S_ISDIR(sb->st_mode) ? 1 : 0);
 		usr = getpwuid(sb->st_uid);
 		grp = getgrgid(sb->st_gid);
-		ret->gname = ft_strdup(grp->gr_name);
-		ret->uname = ft_strdup(usr->pw_name);
+		ret->gname = (grp ? ft_strdup(grp->gr_name) :
+				ft_convert_to_base(sb->st_gid, 10));
+		ret->uname = (usr ? ft_strdup(usr->pw_name) :
+				ft_convert_to_base(sb->st_uid, 10));
 		ret->symlink = get_symlink(ret->path, options, ret);
 	}
 	else

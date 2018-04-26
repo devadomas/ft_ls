@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:26:55 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 22:32:08 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:36:31 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,26 @@ t_opt			*init_opt(void)
 	ret->size_offset = 0;
 	ret->title_offset = 0;
 	ret->total = 0;
+	ret->total_files = 0;
 	if (!(ret->charset = ft_strdup("1alrRt")))
 	{
 		free(ret->window);
 		free(ret);
 		return (0);
 	}
+	return (ret);
+}
+
+/*
+ * TODO: add other options when bonus added
+ */
+int			opt_count(t_opt *opt)
+{
+	int ret;
+
+	ret = 0;
+	ret += opt->rec + opt->long_list + opt->include_hidden + opt->reversed +
+		opt->sorted_t + opt->one;
 	return (ret);
 }
 
@@ -60,6 +74,8 @@ static void	check_charset(const char *str, t_opt *options)
 				found = 1;
 			i++;
 		}
+		if (!found && opt_count(options))
+			return ;
 		if (!found)
 			print_usage(*str, options);
 		str++;
