@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 21:53:08 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 10:34:07 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ static void		format_cols(t_file *files, t_opt *options, int cols)
 
 	i = 0;
 	len = get_file_list_len(files, options->include_hidden);
+	printf("Total files: %d\n", len);
 	len = ft_floor((float)len / cols);
 	//printf("%d / %d Calculus: %d\n", size, len, calc);
 	while (i++ < len)
@@ -163,11 +164,11 @@ static void		format_cols(t_file *files, t_opt *options, int cols)
 		while (j++ < cols)
 		{	
 			index = (i - 1) + (j - 1) * (len);
-			//printf("%-*d", options->title_offset + 1, index);
+			printf("%-*d", options->title_offset + 1, index);
 			file = get_nth_file(files, index, options->include_hidden);
 			if (!file) /* Not sure */
 				break ;
-			printf("%-*s", options->title_offset + 1, file->filename);
+			//printf("%-*s", options->title_offset + 1, file->filename);
 		}
 		printf("\n");
 	}
@@ -187,6 +188,9 @@ void			format_output(t_file *files, t_opt *options)
 {
 	int cols;
 
+	/*
+	 * TODO: ignoring other flags
+	 */
 	if (options->long_list) /* formatting -l option */
 		format_long(files, options);
 

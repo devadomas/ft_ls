@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/25 18:55:51 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 10:18:23 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,15 @@ void			ft_ls(int ac, char **av)
 	{
 		while (start_point < ac)
 		{
-			path = ft_strjoin_conn(".", av[start_point], '/');
-			read_dir(av[start_point++], path, options);
-			free(path);
+			if (av[start_point][0] == '/')
+				read_dir(av[start_point], av[start_point], options);
+			else
+			{
+				path = ft_strjoin_conn(".", av[start_point], '/');
+				read_dir(av[start_point], path, options);
+				free(path);
+			}
+			start_point++;
 		}
 	}
 	clean_options_memory(options);
