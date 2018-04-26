@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/26 14:01:52 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 17:37:15 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,15 @@ static void		print_hard_links(t_file *file, t_opt *options)
 static void		print_owner(t_file *file, t_opt *options)
 {
 	if (!(file->uname))
-	{
-		printf("%*s", options->owner_offset, "unknown"); // make sure about this one
 		return ;
-	}
-	printf("%*s", options->owner_offset, file->uname);
+	printf("%-*s", options->owner_offset, file->uname);
 }
 
 static void		print_group(t_file *file, t_opt *options)
 {
 	if (!(file->gname))
-	{
-		printf(" %*s", options->group_offset, "unknown");
-		// make sure about this one
 		return ;
-	}
-	printf(" %-*s", options->group_offset, file->gname);
+	printf(" %-*s", options->group_offset + 1, file->gname);
 }
 
 static void		print_size(t_file *file, t_opt *options)

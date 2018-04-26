@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 11:01:13 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/26 16:58:53 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 17:39:38 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static char	*get_symlink(const char *path, t_opt *options)
 
 	if (lstat(path, &sb) == 0)
 	{
-		ret = (char *)malloc(sizeof(char) * LINK_BUFF + 1);
-		if (!ret)
+		if (!(ret = (char *)malloc(sizeof(char) * LINK_BUFF + 1)))
 			return (NULL);
 		if ((len = readlink(path, ret, LINK_BUFF + 1)) == -1)
 		{
@@ -38,6 +37,8 @@ static char	*get_symlink(const char *path, t_opt *options)
 			options->total += sb.st_blocks;
 			return (ret);
 		}
+		if (ft_strlen(ret) > 0)
+			return (ret);
 		free(ret);
 	}
 	return (NULL);
