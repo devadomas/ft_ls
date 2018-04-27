@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:55:40 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/26 12:12:37 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 15:47:47 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void		print_error(const char *filename)
 	//perror(error);
 	//printf("%d <-> %s\n", errno, error);
 	if (errno != 20)
-		printf("ft_ls: %s: %s\n", filename, error);
+		printf("ls: %s: %s\n", filename, error);
+	/* "ft_ls: %s: %s\n" */
 }
 
 void		print_usage(const char option, t_opt *options)

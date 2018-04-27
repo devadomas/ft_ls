@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 14:00:25 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 18:33:07 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void		read_dir(const char *filename, const char *path, t_opt *options,
 	DIR				*dir;
 	struct dirent	*dp;
 	t_file			*files;
-	
+
 	if (is_file(path))
 		return ;
 	dir = opendir(path);
@@ -75,6 +75,30 @@ static void		read_dir(const char *filename, const char *path, t_opt *options,
 	}
 }
 
+void			sort_arguments(int begin, int ac, char **av)
+{
+	int i;
+	int j;
+
+	i = begin;
+	while (i < ac)
+	{
+		j = i + 1;
+		while (j < ac)
+		{
+			if (ft_strcmp(av[i], av[j]) > 0)
+			{
+				char *tmp;
+				tmp = av[i];
+				av[i] = av[j];
+				av[j] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 void			ft_ls(int ac, char **av)
 {
 	t_opt	*options;
@@ -92,6 +116,7 @@ void			ft_ls(int ac, char **av)
 	printf("Reversed: %d\n", options->reversed);
 	printf("Sorted t: %d\n", options->sorted_t);
 	printf("---\n");*/
+	sort_arguments(start_point, ac, av);
 	if (start_point == ac)
 		read_dir(".", ".", options, 1);
 	else

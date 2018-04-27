@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 11:01:13 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 13:29:40 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 19:17:11 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 
 #include <stdio.h>
 
-
-/*
- * TODO: not sure about another "restating"
- */
 static char	*get_symlink(const char *path, t_opt *options)
 {
 	struct stat		sb;

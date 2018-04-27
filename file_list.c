@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:34:41 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 13:45:17 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 19:15:21 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,9 @@ void			sort_files_bytime(t_file **files)
 		next = curr->next;
 		while (next)
 		{
-			if ((curr->sb)->st_mtime < (next->sb)->st_mtime)
+			if ((curr->sb)->st_mtime < (next->sb)->st_mtime ||
+					((curr->sb)->st_mtime == (next->sb)->st_mtime &&
+					 ft_strcmp(curr->filename, next->filename) > 0))
 				swap_node(files, &prev, &curr, &next);
 			else
 			{

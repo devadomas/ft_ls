@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 14:01:12 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 18:40:56 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,24 @@ static void		print_permissions(t_file *file)
 		printf((file->symlink ? "l" : "-"));
 	printf((sb->st_mode & S_IRUSR) ? "r" : "-");
 	printf((sb->st_mode & S_IWUSR) ? "w" : "-");
-	printf((sb->st_mode & S_IXUSR) ? "x" : "-");
+	if (sb->st_mode & S_ISUID)
+		printf((sb->st_mode & S_IXUSR) ? "s" : "S");
+	else
+		printf((sb->st_mode & S_IXUSR) ? "x" : "-");
 	printf((sb->st_mode & S_IRGRP) ? "r" : "-");
 	printf((sb->st_mode & S_IWGRP) ? "w" : "-");
-	printf((sb->st_mode & S_IXGRP) ? "x" : "-");
+	if (sb->st_mode & S_ISGID)
+		printf((sb->st_mode & S_IXGRP) ? "s" : "S"); // not sure if S or l
+	else
+		printf((sb->st_mode & S_IXGRP) ? "x" : "-");
 	printf((sb->st_mode & S_IROTH) ? "r" : "-");
 	printf((sb->st_mode & S_IWOTH) ? "w" : "-");
-	printf((sb->st_mode & S_IXOTH) ? "x" : "-");
+	if (sb->st_mode & S_ISVTX)
+		printf((sb->st_mode & S_IXOTH) ? "t" : "T");
+	else
+		printf((sb->st_mode & S_IXOTH) ? "x" : "-");
 	xattr = listxattr(file->path, NULL, 0, XATTR_NOFOLLOW);
-	printf((xattr == 0 ? " " : "@"));
+	printf((xattr > 0 ? "@" : " "));
 }
 
 static void		print_hard_links(t_file *file, t_opt *options)
@@ -93,7 +102,7 @@ static void		print_date(t_file *file, t_opt *options)
 	time_str = ctime(&(file->sb)->st_mtime);
 	/* time_str example: "Mon Apr 23 20:10:38 2018\n" */
 	calc = now - (file->sb)->st_mtime;
-	if (ABS(calc) > 13132800)
+	if (ABS(calc) > 15724800) //13132700
 	{
 		formatted = ft_strsub(time_str, 4, 7);
 		printf("%s", formatted);
@@ -121,7 +130,10 @@ static void		print_date(t_file *file, t_opt *options)
 
 static void		format_long(t_file *files, t_opt *options, t_bool long_mode)
 {
-	if (long_mode)
+	int count;
+
+	count = get_file_list_len(files, options->include_hidden); // eats speed
+	if (long_mode && count)
 		printf("total %d\n", options->total);
 	while (files)
 	{

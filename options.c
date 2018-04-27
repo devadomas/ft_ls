@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:26:55 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/26 16:24:14 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 15:18:42 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int			opt_count(t_opt *opt)
 	return (ret);
 }
 
-static void	check_charset(const char *str, t_opt *options)
+static int	check_charset(const char *str, t_opt *options)
 {
 	int		i;
 	int		found;
@@ -75,18 +75,20 @@ static void	check_charset(const char *str, t_opt *options)
 			i++;
 		}
 		if (!found && opt_count(options))
-			return ;
+			return (0);
 		if (!found)
 			print_usage(*str, options);
 		str++;
 	}
+	return (1);
 }
 
-static void	parse_options(t_opt *ret, char *str)
+static int	parse_options(t_opt *ret, char *str)
 {
 	while (*str)
 	{
-		check_charset((str + 1), ret);
+		if (!check_charset((str + 1), ret))
+			return (0);
 		ret->rec = (*str == 'R' ? 1 : ret->rec);
 		ret->long_list = (*str == 'l' ? 1 : ret->long_list);
 		ret->include_hidden = (*str == 'a' ? 1 : ret->include_hidden);
@@ -95,6 +97,7 @@ static void	parse_options(t_opt *ret, char *str)
 		ret->one = (*str == '1' ? 1 : ret->one);
 		str++;
 	}
+	return (1);
 }
 
 int			load_options(t_opt *options, int ac, char **av)
@@ -104,10 +107,19 @@ int			load_options(t_opt *options, int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
+		if (ft_strlen(av[i]) == 2 && av[i][0] == '-' && av[i][1] == '-')
+		{
+			i++;
+			if (i == ac)
+				return (i);
+		}
 		if (av[i][0] != '-' || (av[i][0] == '-' && ft_strlen(av[i]) < 2))
 			break ;
 		else
-			parse_options(options, av[i]); 
+		{
+			if (!parse_options(options, av[i]))
+				break ;
+		}
 		i++;
 	}
 	return (i);
