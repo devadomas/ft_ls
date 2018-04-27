@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 18:33:07 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 19:37:37 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ static void		read_dir(const char *filename, const char *path, t_opt *options,
 	struct dirent	*dp;
 	t_file			*files;
 
-	if (is_file(path))
-		return ;
 	dir = opendir(path);
+	if (is_file(path) && !(dir && !(options->long_list)))
+		return ;
 	files = NULL;
 	printf((options->count ? "\n" : ""));
 	if (options->total_files > 0 || (options->rec && options->count))

@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/27 10:44:18 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 18:33:15 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 19:43:16 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,21 @@ t_bool		is_file(const char *path)
 void		process_files(int begin, int ac, char **av, t_opt *options)
 {
 	t_file		*files;
+	DIR			*dir;
 
 	files = NULL;
 	while (begin < ac)
 	{
-		if (is_file(av[begin]))
+		dir = opendir(av[begin]);
+		if (is_file(av[begin]) && !(dir && !(options->long_list)))
 		{
 			options->count++;
 			file_push(&files, init_file(av[begin],
 					   (av[begin][0] != '/' ? "." : ""),
 					   	options));
 		}
+		if (dir)
+			closedir(dir);
 		begin++;
 	}
 	if (!files)
