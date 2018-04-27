@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 10:18:00 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 10:24:55 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include <stdio.h>
 /*
  *
- * TODO: fix random soft link apperance in /etc
  * TODO: if passing file without /, just display info about that file
  *
  */
@@ -50,8 +49,7 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 	files = NULL;
 	if (options->count != 0)
 		printf("\n");
-	if (options->total_files > 0 || (options->rec && options->count)) // moved from else
-		//printf("%s:\n", (path[0] == '.' ? filename : path));
+	if (options->total_files > 0 || (options->rec && options->count))
 		printf("%s:\n", (options->rec ? path : filename));
 	if (!dir)
 		print_error(filename);
@@ -102,7 +100,7 @@ void			ft_ls(int ac, char **av)
 	else
 	{
 		/*
-		 * Recheck for root files, if exhists, print firstly
+		 * TODO: Recheck for root files, if exhists, print firstly
 		 */
 		while (start_point < ac)
 		{
