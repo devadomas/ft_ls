@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/26 21:39:16 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 10:04:20 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,8 @@ static void		format_cols(t_file *files, t_opt *options, int cols)
 
 	i = 0;
 	len = get_file_list_len(files, options->include_hidden);
-	//printf("Total files: %d\n", len);
-	len = ft_floor_up((float)len / cols);
+	if (len != 1)
+		len = ft_floor_up((float)len / cols);
 	//printf("%d / %d Calculus: %d\n", size, len, calc);
 	while (i++ < len)
 	{

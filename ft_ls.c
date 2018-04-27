@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/26 17:38:39 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 10:18:00 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 	files = NULL;
 	if (options->count != 0)
 		printf("\n");
-	if (options->total_files > 0) // moved from else
+	if (options->total_files > 0 || (options->rec && options->count)) // moved from else
 		//printf("%s:\n", (path[0] == '.' ? filename : path));
-		printf("%s:\n", path);
+		printf("%s:\n", (options->rec ? path : filename));
 	if (!dir)
 		print_error(filename);
 	else
@@ -61,7 +61,6 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 
 		while ((dp = readdir(dir)) != NULL)
 			file_push(&files, init_file(dp->d_name, path, options));
-		
 		if (options->sorted_t)
 			sort_files_bytime(&files);
 		else
@@ -76,7 +75,7 @@ static void		read_dir(const char *filename, const char *path, t_opt *options)
 		
 		if (options->rec)
 			call_recursive(files, options);
-		clean_files_memory(files, options); // symlink segfaults
+		clean_files_memory(files, options);
 		closedir(dir);
 	}
 }
@@ -102,6 +101,9 @@ void			ft_ls(int ac, char **av)
 		read_dir(".", ".", options);
 	else
 	{
+		/*
+		 * Recheck for root files, if exhists, print firstly
+		 */
 		while (start_point < ac)
 		{
 			if (av[start_point][0] == '/' || av[start_point][0] == '.')

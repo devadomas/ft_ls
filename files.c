@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 11:01:13 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/26 17:39:38 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/26 21:51:31 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_file		*init_file(const char *filename, const char *path, t_opt *options)
 	if (!ret || !(ret->filename = ft_strdup(filename)) ||
 			!(ret->path = ft_strjoin_conn(path, filename, '/')) ||
 			!(sb = (struct stat *)malloc(sizeof(struct stat))))
-		return (NULL);	
+		return (NULL);
 	if (lstat(ret->path, sb) == 0)
 	{
 		ret->sb = sb;
