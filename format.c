@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 10:04:20 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 10:28:15 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,20 +86,17 @@ static void		print_date(t_file *file, t_opt *options)
 
 	(void)options;
 	if (!(file->sb))
-	{
-		printf("XXX XX XX:XX");//to fix
 		return ;
-	}
 	time(&now);
 	time_str = ctime(&(file->sb)->st_mtime);
-	// time_str example: "Mon Apr 23 20:10:38 2018\n"
+	/* time_str example: "Mon Apr 23 20:10:38 2018\n" */
 	if (ABS(now - (file->sb)->st_mtime) > 13132800)
 	{
 		formatted = ft_strsub(time_str, 4, 7);
 		printf("%s", formatted);
 		free(formatted);
 		formatted = ft_strsub(time_str, 20, 4);
-		printf("%5s", formatted); /* don't know if gap needed - date len (5) */
+		printf("%5s", formatted);
 		free(formatted);
 	}
 	else
@@ -128,7 +125,6 @@ static void		format_long(t_file *files, t_opt *options)
 			print_size(files, options);
 			printf(" ");
 			print_date(files, options);
-
 			printf(" %s", files->filename);
 			if (files->symlink)
 				printf(" -> %s", files->symlink);
@@ -150,16 +146,14 @@ static void		format_cols(t_file *files, t_opt *options, int cols)
 	len = get_file_list_len(files, options->include_hidden);
 	if (len != 1)
 		len = ft_floor_up((float)len / cols);
-	//printf("%d / %d Calculus: %d\n", size, len, calc);
 	while (i++ < len)
 	{
 		j = 0;
 		while (j++ < cols)
 		{	
 			index = (i - 1) + (j - 1) * (len);
-			//printf("%-*d", options->title_offset + 1, index);
 			file = get_nth_file(files, index, options->include_hidden);
-			if (!file) /* Not sure */
+			if (!file)
 				break ;
 			printf("%-*s", options->title_offset + 1, file->filename);
 		}
@@ -184,16 +178,13 @@ void			format_output(t_file *files, t_opt *options)
 	/*
 	 * TODO: ignoring other flags
 	 */
-	if (options->long_list) /* formatting -l option */
+	if (options->long_list)
 		format_long(files, options);
-
 	else if (options->one)
 		format_simple(files, options);
 	else 
 	{
 		cols = (options->window)->ws_col / (options->title_offset + 1);
-		/*printf("widht: %d | can fit: %d | title: %d\n",
-				(options->window)->ws_col, cols, options->title_offset);*/
 		if (!cols)
 			format_simple(files, options);
 		else
