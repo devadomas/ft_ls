@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:30:49 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 10:19:28 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 13:55:39 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,16 @@ void		clean_options_memory(t_opt *options)
 	free(options->charset);
 	free(options->window);
 	free(options);
+}
+
+void		clean_options(t_opt *options)
+{
+	if (!options)
+		return ;
+	options->hlink_offset = 0;
+	options->owner_offset = 0;
+	options->group_offset = 0;
+	options->size_offset = 0;
+	options->title_offset = 0;
+	options->total = 0;
 }

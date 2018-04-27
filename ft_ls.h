@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/26 16:58:07 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 14:00:06 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int			load_options(t_opt *options, int ac, char **av);
 void		print_error(const char *filename);
 void		file_push(t_file **list, t_file *file);
 t_file		*init_file(const char *filename, const char *path, t_opt *options);
-void		format_output(t_file *files, t_opt *options);
+void		format_output(t_file *files, t_opt *options, t_bool long_mode);
 t_bool		is_file_hidden(const char *filename);
 void		sort_files_byname(t_file **files, t_bool reversed);
 void		sort_files_bytime(t_file **files);
@@ -93,5 +93,8 @@ void		print_usage(const char option, t_opt *options);
 void		reverse_files_list(t_file **files);
 int			ft_floor(float nbr);
 int			ft_floor_up(float nbr);
+t_bool		is_file(const char *path);
+void		process_files(int begin, int ac, char **av, t_opt *options);
+void		clean_options(t_opt *options);
 
 #endif

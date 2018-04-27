@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 10:28:15 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 14:01:12 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,10 @@ static void		print_size(t_file *file, t_opt *options)
 static void		print_date(t_file *file, t_opt *options)
 {
 	time_t			now;
+	time_t			calc;
 	char			*time_str;
 	char			*formatted;
+	int 			i;
 
 	(void)options;
 	if (!(file->sb))
@@ -90,13 +92,23 @@ static void		print_date(t_file *file, t_opt *options)
 	time(&now);
 	time_str = ctime(&(file->sb)->st_mtime);
 	/* time_str example: "Mon Apr 23 20:10:38 2018\n" */
-	if (ABS(now - (file->sb)->st_mtime) > 13132800)
+	calc = now - (file->sb)->st_mtime;
+	if (ABS(calc) > 13132800)
 	{
 		formatted = ft_strsub(time_str, 4, 7);
 		printf("%s", formatted);
 		free(formatted);
-		formatted = ft_strsub(time_str, 20, 4);
-		printf("%5s", formatted);
+		/* Needs to be moved in to different command */
+		i = 20;
+		while (time_str[i] == ' ')
+			i++;
+		int b;
+		b = i;
+		while(ft_isdigit(time_str[b]))
+			b++;
+		formatted = ft_strsub(time_str, i, b - i);
+		/* /--- */
+		printf(" %s", formatted);
 		free(formatted);
 	}
 	else
@@ -107,9 +119,10 @@ static void		print_date(t_file *file, t_opt *options)
 	}
 }
 
-static void		format_long(t_file *files, t_opt *options)
+static void		format_long(t_file *files, t_opt *options, t_bool long_mode)
 {
-	printf("total %d\n", options->total);
+	if (long_mode)
+		printf("total %d\n", options->total);
 	while (files)
 	{
 		if (!(is_file_hidden(files->filename) && !(options->include_hidden)))
@@ -171,7 +184,7 @@ void		format_simple(t_file *files, t_opt *options)
 	}
 }
 
-void			format_output(t_file *files, t_opt *options)
+void			format_output(t_file *files, t_opt *options, t_bool long_mode)
 {
 	int cols;
 
@@ -179,7 +192,7 @@ void			format_output(t_file *files, t_opt *options)
 	 * TODO: ignoring other flags
 	 */
 	if (options->long_list)
-		format_long(files, options);
+		format_long(files, options, long_mode);
 	else if (options->one)
 		format_simple(files, options);
 	else 

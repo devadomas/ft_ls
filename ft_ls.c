@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 10:24:55 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/27 14:00:25 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,62 +15,59 @@
 #include <stdlib.h>
 
 #include <stdio.h>
-/*
- *
- * TODO: if passing file without /, just display info about that file
- *
- */
 
-static void		read_dir(const char *filename, const char *path, t_opt *options);
+
+static void		read_dir(const char *filename, const char *path, t_opt *options,
+		int root);
 
 static void		call_recursive(t_file *files, t_opt *options)
 {
+	clean_options(options);
 	while (files)
 	{
 		if (files->is_dir && (ft_strcmp(files->filename, ".") &&
 						ft_strcmp(files->filename, "..")))
 		{
 			if (options->include_hidden)
-				read_dir(files->filename, files->path, options);
+				read_dir(files->filename, files->path, options, 0);
 			else if (!is_file_hidden(files->filename))
-				read_dir(files->filename, files->path, options);
+				read_dir(files->filename, files->path, options, 0);
 		}
 		files = files->next;
 	}
 }
 
-static void		read_dir(const char *filename, const char *path, t_opt *options)
+static void		read_dir(const char *filename, const char *path, t_opt *options,
+		int root)
 {
 	DIR				*dir;
 	struct dirent	*dp;
 	t_file			*files;
-
+	
+	if (is_file(path))
+		return ;
 	dir = opendir(path);
 	files = NULL;
-	if (options->count != 0)
-		printf("\n");
+	printf((options->count ? "\n" : ""));
 	if (options->total_files > 0 || (options->rec && options->count))
-		printf("%s:\n", (options->rec ? path : filename));
+		printf("%s:\n", (options->rec && !root ? path : filename));
 	if (!dir)
 		print_error(filename);
 	else
 	{
 		options->count++;
-
 		while ((dp = readdir(dir)) != NULL)
 			file_push(&files, init_file(dp->d_name, path, options));
+
 		if (options->sorted_t)
 			sort_files_bytime(&files);
 		else
 			sort_files_byname(&files, (options->reversed ? TRUE : FALSE));
-	
+		
 		if (options->reversed)
 			reverse_files_list(&files);
-
 		load_offsets(files, options);
-		
-		format_output(files, options);
-		
+		format_output(files, options, TRUE);
 		if (options->rec)
 			call_recursive(files, options);
 		clean_files_memory(files, options);
@@ -96,16 +93,14 @@ void			ft_ls(int ac, char **av)
 	printf("Sorted t: %d\n", options->sorted_t);
 	printf("---\n");*/
 	if (start_point == ac)
-		read_dir(".", ".", options);
+		read_dir(".", ".", options, 1);
 	else
 	{
-		/*
-		 * TODO: Recheck for root files, if exhists, print firstly
-		 */
+		process_files(start_point, ac, av, options);
 		while (start_point < ac)
 		{
 			if (av[start_point][0] == '/' || av[start_point][0] == '.')
-				read_dir(av[start_point], av[start_point], options);
+				read_dir(av[start_point], av[start_point], options, 1);
 			else
 			{
 				int len = ft_strlen(av[start_point]);
@@ -113,7 +108,7 @@ void			ft_ls(int ac, char **av)
 					path = ft_strjoin_conn(".", av[start_point], '/');
 				else
 					path = av[start_point];
-				read_dir(av[start_point], path, options);
+				read_dir(av[start_point], path, options, 1);
 				//free(path);
 			}
 			start_point++;
