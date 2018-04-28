@@ -6,15 +6,13 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 16:35:20 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 19:51:18 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include <stdlib.h>
 #include <unistd.h>
-
-#include <stdio.h>
 
 static void		format_cols(t_file *files, t_opt *options, int cols)
 {
@@ -37,9 +35,11 @@ static void		format_cols(t_file *files, t_opt *options, int cols)
 			file = get_nth_file(files, index, options->include_hidden);
 			if (!file)
 				break ;
-			printf("%-*s", options->title_offset + 1, file->filename);
+			//printf("%-*s", options->title_offset + 1, file->filename);
+			print_str(file->filename, options->title_offset + 1, 0, 0);
 		}
-		printf("\n");
+		//printf("\n");
+		ft_putchar('\n');
 	}
 }
 
@@ -48,7 +48,11 @@ void			format_simple(t_file *files, t_opt *options)
 	while (files)
 	{
 		if (!(is_file_hidden(files->filename) && !(options->include_hidden)))
-			printf("%s\n", files->filename);
+		{
+			ft_putstr(files->filename);
+			ft_putchar('\n');
+			// printf("%s\n", files->filename);
+		}
 		files = files->next;
 	}
 }

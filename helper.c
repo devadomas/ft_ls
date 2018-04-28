@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/28 15:19:44 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 15:30:15 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 19:47:27 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@
 void		print_header(t_opt *options, const char *filename, const char *path,
 		int root)
 {
-	printf((options->count ? "\n" : ""));
+	ft_putchar((options->count ? '\n' : 0));
 	if (options->total_files > 0 || (options->rec && options->count))
-		printf("%s:\n", (options->rec && !root ? path : filename));
+	{
+		ft_putstr((options->rec && !root ? path : filename));
+		ft_putstr(":\n");
+		//printf("%s:\n", (options->rec && !root ? path : filename));
+	}
 }
 
 void		sort_files(t_opt *options, t_file **files)

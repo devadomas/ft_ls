@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 11:01:13 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 17:03:23 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 18:44:17 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_file		*init_file(const char *filename, const char *path)
 	return (ret);
 }
 
-void		file_push(t_file **list, t_file *file)
+void		file_push(t_file **list, t_file *file, t_opt *options)
 {
 	t_file		*cpy;
 
@@ -81,6 +81,7 @@ void		file_push(t_file **list, t_file *file)
 			cpy = cpy->next;
 		cpy->next = file;
 	}
+	load_offset(file, options);
 }
 
 t_bool		is_file_hidden(const char *filename)

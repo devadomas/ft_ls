@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 18:42:21 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 18:50:38 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,9 @@ void		read_dir(const char *filename, const char *path, t_opt *options,
 	{
 		options->count++;
 		while ((dp = readdir(dir)) != NULL)
-			file_push(&files, init_file(dp->d_name, path));
+			file_push(&files, init_file(dp->d_name, path), options);
 		sort_files(options, &files);
 		reverse_files_list(&files, options);
-		load_offsets(files, options); // might add to file reading(more speed)
 		format_output(files, options, TRUE);
 		call_recursive(files, options);
 		clean_files_memory(files, options);
