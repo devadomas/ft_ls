@@ -6,18 +6,20 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:34:41 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 14:38:20 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 15:39:45 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void			reverse_files_list(t_file **files)
+void			reverse_files_list(t_file **files, t_opt *options)
 {
 	t_file		*curr;
 	t_file		*prev;
 	t_file		*next;
 
+	if (!(options->reversed))
+		return ;
 	prev = NULL;
 	next = *files;
 	if (!next)

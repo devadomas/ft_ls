@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/16 09:55:40 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 16:59:33 by azaliaus         ###   ########.fr       */
+/*   Created: 2018/04/28 15:19:44 by azaliaus          #+#    #+#             */
+/*   Updated: 2018/04/28 15:30:15 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-#include <stdlib.h>
 
 #include <stdio.h>
 
-void		print_error(const char *filename)
+void		print_header(t_opt *options, const char *filename, const char *path,
+		int root)
 {
-	char		*error;
-
-	error = strerror(errno);
-	if (errno != 20)
-		printf("ls: %s: %s\n", filename, error);
+	printf((options->count ? "\n" : ""));
+	if (options->total_files > 0 || (options->rec && options->count))
+		printf("%s:\n", (options->rec && !root ? path : filename));
 }
 
-void		print_usage(const char option, t_opt *options)
+void		sort_files(t_opt *options, t_file **files)
 {
-	printf("ft_ls: illegal option -- %c\n", option);
-	printf("usage: ft_ls [-%s] [file ...]\n", options->charset);
-	free(options);
-	exit(1);
+	if (options->sorted_t)
+		sort_files_bytime(files);
+	else
+		sort_files_byname(files);
 }

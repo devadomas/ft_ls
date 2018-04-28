@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:26:55 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 14:18:55 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 16:51:48 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ t_opt			*init_opt(void)
 {
 	t_opt		*ret;
 
-	if (!(ret = (t_opt *)malloc(sizeof(t_opt))))
-		return (0);
-	if (!(ret->window = (struct winsize *)malloc(sizeof(struct winsize))))
+	if (!(ret = (t_opt *)malloc(sizeof(t_opt))) ||
+			!(ret->window = (struct winsize *)malloc(sizeof(struct winsize))) ||
+			!(ret->charset = ft_strdup("1alrRt")))
 		return (0);
 	ret->rec = 0;
 	ret->long_list = 0;
@@ -35,19 +35,14 @@ t_opt			*init_opt(void)
 	ret->title_offset = 0;
 	ret->total = 0;
 	ret->total_files = 0;
-	if (!(ret->charset = ft_strdup("1alrRt")))
-	{
-		free(ret->window);
-		free(ret);
-		return (0);
-	}
 	return (ret);
 }
 
 /*
  * TODO: add other options when bonus added
  */
-int			opt_count(t_opt *opt)
+
+int				opt_count(t_opt *opt)
 {
 	int ret;
 
@@ -57,7 +52,7 @@ int			opt_count(t_opt *opt)
 	return (ret);
 }
 
-static int	check_charset(const char *str, t_opt *options)
+static int		check_charset(const char *str, t_opt *options)
 {
 	int		i;
 	int		found;
@@ -83,7 +78,7 @@ static int	check_charset(const char *str, t_opt *options)
 	return (1);
 }
 
-static int	parse_options(t_opt *ret, char *str)
+static int		parse_options(t_opt *ret, char *str)
 {
 	while (*str)
 	{
@@ -100,7 +95,7 @@ static int	parse_options(t_opt *ret, char *str)
 	return (1);
 }
 
-int			load_options(t_opt *options, int ac, char **av)
+int				load_options(t_opt *options, int ac, char **av)
 {
 	int		i;
 

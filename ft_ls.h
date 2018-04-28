@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 14:39:10 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 16:42:40 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ int			load_options(t_opt *options, int ac, char **av);
 void		print_error(const char *filename);
 void		file_push(t_file **list, t_file *file);
 t_file		*init_file(const char *filename, const char *path);
+void		read_dir(const char *filename, const char *path, t_opt *options,
+		int root);
 void		format_output(t_file *files, t_opt *options, t_bool long_mode);
+void		format_long(t_file *files, t_opt *options, t_bool long_mode);
 t_bool		is_file_hidden(const char *filename);
 void		sort_files_byname(t_file **files);
 void		sort_files_bytime(t_file **files);
@@ -90,12 +93,15 @@ void		clean_options_memory(t_opt *options);
 int			get_file_list_len(t_file *files, int hidden);
 t_file		*get_nth_file(t_file *files, unsigned int nth, int hidden);
 void		print_usage(const char option, t_opt *options);
-void		reverse_files_list(t_file **files);
+void		reverse_files_list(t_file **files, t_opt *options);
 int			ft_floor(float nbr);
 int			ft_floor_up(float nbr);
 t_bool		is_file(const char *path);
 void		process_files(int begin, int ac, char **av, t_opt *options);
 void		clean_options(t_opt *options);
 void		sort_arguments(int begin, int ac, char **av);
+void		print_header(t_opt *options, const char *filename, const char *path,
+		int root);
+void		sort_files(t_opt *options, t_file **files);
 
 #endif

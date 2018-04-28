@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 14:35:23 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 18:42:21 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,7 @@
 
 #include <stdio.h>
 
-
-static void		read_dir(const char *filename, const char *path, t_opt *options,
-		int root);
-
-static void		call_recursive(t_file *files, t_opt *options)
+static void	call_recursive(t_file *files, t_opt *options)
 {
 	if (!(options->rec))
 		return ;
@@ -39,7 +35,7 @@ static void		call_recursive(t_file *files, t_opt *options)
 	}
 }
 
-static void		read_dir(const char *filename, const char *path, t_opt *options,
+void		read_dir(const char *filename, const char *path, t_opt *options,
 		int root)
 {
 	DIR				*dir;
@@ -50,9 +46,7 @@ static void		read_dir(const char *filename, const char *path, t_opt *options,
 	if (is_file(path) && !(dir && !(options->long_list)))
 		return ;
 	files = NULL;
-	printf((options->count ? "\n" : ""));
-	if (options->total_files > 0 || (options->rec && options->count))
-		printf("%s:\n", (options->rec && !root ? path : filename));
+	print_header(options, filename, path, root);
 	if (!dir)
 		print_error(filename);
 	else
@@ -60,13 +54,9 @@ static void		read_dir(const char *filename, const char *path, t_opt *options,
 		options->count++;
 		while ((dp = readdir(dir)) != NULL)
 			file_push(&files, init_file(dp->d_name, path));
-		if (options->sorted_t)
-			sort_files_bytime(&files);
-		else
-			sort_files_byname(&files);
-		if (options->reversed)
-			reverse_files_list(&files);
-		load_offsets(files, options);
+		sort_files(options, &files);
+		reverse_files_list(&files, options);
+		load_offsets(files, options); // might add to file reading(more speed)
 		format_output(files, options, TRUE);
 		call_recursive(files, options);
 		clean_files_memory(files, options);
@@ -74,7 +64,7 @@ static void		read_dir(const char *filename, const char *path, t_opt *options,
 	}
 }
 
-void			ft_ls(int ac, char **av)
+void		ft_ls(int ac, char **av)
 {
 	t_opt	*options;
 	int		start_point;
@@ -102,13 +92,12 @@ void			ft_ls(int ac, char **av)
 				read_dir(av[start_point], av[start_point], options, 1);
 			else
 			{
-				int len = ft_strlen(av[start_point]);
-				if (av[start_point][len - 1] != '/')
+				if (av[start_point][ft_strlen(av[start_point]) - 1] != '/')
 					path = ft_strjoin_conn(".", av[start_point], '/');
 				else
-					path = av[start_point];
+					path = ft_strdup(av[start_point]);
 				read_dir(av[start_point], path, options, 1);
-				//free(path);
+				free(path);
 			}
 			start_point++;
 		}

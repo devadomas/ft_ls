@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/28 14:32:07 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 14:39:33 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 16:49:48 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@ void			sort_arguments(int begin, int ac, char **av)
 	}
 }
 
+static void		iterate_flist(t_file **prev, t_file **curr, t_file **next)
+{
+	*prev = *curr;
+	*curr = (*curr)->next;
+	*next = (*curr)->next;
+}
+
 void			sort_files_byname(t_file **files)
 {
 	int			i;
@@ -71,11 +78,7 @@ void			sort_files_byname(t_file **files)
 			if (ft_strcmp(curr->filename, next->filename) > 0)
 				swap_node(files, &prev, &curr, &next);
 			else
-			{
-				prev = curr;
-				curr = curr->next;
-				next = curr->next;
-			}
+				iterate_flist(&prev, &curr, &next);
 		}
 	}
 }
@@ -101,14 +104,10 @@ void			sort_files_bytime(t_file **files)
 		{
 			if ((curr->sb)->st_mtime < (next->sb)->st_mtime ||
 					((curr->sb)->st_mtime == (next->sb)->st_mtime &&
-					 ft_strcmp(curr->filename, next->filename) > 0))
+					ft_strcmp(curr->filename, next->filename) > 0))
 				swap_node(files, &prev, &curr, &next);
 			else
-			{
-				prev = curr;
-				curr = curr->next;
-				next = curr->next;
-			}
+				iterate_flist(&prev, &curr, &next);
 		}
 	}
 }
