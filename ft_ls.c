@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 18:50:38 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 20:53:02 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ void		read_dir(const char *filename, const char *path, t_opt *options,
 	DIR				*dir;
 	struct dirent	*dp;
 	t_file			*files;
+	t_file			*last;
 
 	dir = opendir(path);
 	if (is_file(path) && !(dir && !(options->long_list)))
 		return ;
 	files = NULL;
+	last = files;
 	print_header(options, filename, path, root);
 	if (!dir)
 		print_error(filename);
@@ -53,7 +55,7 @@ void		read_dir(const char *filename, const char *path, t_opt *options,
 	{
 		options->count++;
 		while ((dp = readdir(dir)) != NULL)
-			file_push(&files, init_file(dp->d_name, path), options);
+			file_push_back(&files, init_file(dp->d_name, path), &last, options);
 		sort_files(options, &files);
 		reverse_files_list(&files, options);
 		format_output(files, options, TRUE);

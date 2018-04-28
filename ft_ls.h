@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 19:17:16 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 20:50:18 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ typedef struct			s_file
 	char				*path;
 	int					is_dir;
 	struct stat			*sb;
-	char				*gname;
-	char				*uname;
+	/*char				*gname;
+	char				*uname;*/
+	struct passwd		*usr;
+	struct group		*grp;
 	char				*symlink;
 	struct s_file		*next;
 }						t_file;
@@ -106,4 +108,8 @@ void		sort_files(t_opt *options, t_file **files);
 
 void		print_str(const char *str, int offset, t_bool right, t_bool space);
 void		print_nbr(long long nbr, int offset, t_bool right, t_bool space);
+
+void		file_push_back(t_file **list, t_file *file, t_file **lst,
+		t_opt *options);
+
 #endif
