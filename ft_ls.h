@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 18:27:07 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 14:39:10 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ t_opt		*init_opt(void);
 int			load_options(t_opt *options, int ac, char **av);
 void		print_error(const char *filename);
 void		file_push(t_file **list, t_file *file);
-t_file		*init_file(const char *filename, const char *path, t_opt *options);
+t_file		*init_file(const char *filename, const char *path);
 void		format_output(t_file *files, t_opt *options, t_bool long_mode);
 t_bool		is_file_hidden(const char *filename);
-void		sort_files_byname(t_file **files, t_bool reversed);
+void		sort_files_byname(t_file **files);
 void		sort_files_bytime(t_file **files);
 void		load_offsets(t_file *list, t_opt *options);
 void		clean_files_memory(t_file *files, t_opt *options);
@@ -96,5 +96,6 @@ int			ft_floor_up(float nbr);
 t_bool		is_file(const char *path);
 void		process_files(int begin, int ac, char **av, t_opt *options);
 void		clean_options(t_opt *options);
+void		sort_arguments(int begin, int ac, char **av);
 
 #endif

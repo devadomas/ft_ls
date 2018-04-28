@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 11:01:13 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 19:17:11 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 13:45:26 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@
 
 #include <stdio.h>
 
-static char	*get_symlink(const char *path, t_opt *options)
+static char	*get_symlink(const char *path)
 {
 	struct stat		sb;
 	char			*ret;
 	int				len;
 
-	(void)options;
 	if (lstat(path, &sb) == 0)
 	{
 		if (!(ret = (char *)malloc(sizeof(char) * LINK_BUFF + 1)))
@@ -44,7 +43,7 @@ static char	*get_symlink(const char *path, t_opt *options)
 	return (NULL);
 }
 
-t_file		*init_file(const char *filename, const char *path, t_opt *options)
+t_file		*init_file(const char *filename, const char *path)
 {
 	t_file			*ret;
 	struct stat		*sb;
@@ -67,15 +66,11 @@ t_file		*init_file(const char *filename, const char *path, t_opt *options)
 				ft_convert_to_base(sb->st_gid, 10));
 		ret->uname = (usr ? ft_strdup(usr->pw_name) :
 				ft_convert_to_base(sb->st_uid, 10));
-		ret->symlink = get_symlink(ret->path, options);
+		ret->symlink = get_symlink(ret->path);
+		return (ret);
 	}
-	else
-	{
-		free(ret);
-		return (NULL);
-	}
-	ret->next = NULL;
-	return (ret);
+	free(ret);
+	return (NULL);
 }
 
 void		file_push(t_file **list, t_file *file)
@@ -83,6 +78,7 @@ void		file_push(t_file **list, t_file *file)
 	t_file		*cpy;
 
 	cpy = *list;
+	file->next = NULL;
 	if (!cpy)
 		*list = file;
 	else

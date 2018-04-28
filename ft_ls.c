@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 19:37:37 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 14:35:23 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static void		read_dir(const char *filename, const char *path, t_opt *options,
 
 static void		call_recursive(t_file *files, t_opt *options)
 {
+	if (!(options->rec))
+		return ;
 	clean_options(options);
 	while (files)
 	{
@@ -57,45 +59,18 @@ static void		read_dir(const char *filename, const char *path, t_opt *options,
 	{
 		options->count++;
 		while ((dp = readdir(dir)) != NULL)
-			file_push(&files, init_file(dp->d_name, path, options));
-
+			file_push(&files, init_file(dp->d_name, path));
 		if (options->sorted_t)
 			sort_files_bytime(&files);
 		else
-			sort_files_byname(&files, (options->reversed ? TRUE : FALSE));
-		
+			sort_files_byname(&files);
 		if (options->reversed)
 			reverse_files_list(&files);
 		load_offsets(files, options);
 		format_output(files, options, TRUE);
-		if (options->rec)
-			call_recursive(files, options);
+		call_recursive(files, options);
 		clean_files_memory(files, options);
 		closedir(dir);
-	}
-}
-
-void			sort_arguments(int begin, int ac, char **av)
-{
-	int i;
-	int j;
-
-	i = begin;
-	while (i < ac)
-	{
-		j = i + 1;
-		while (j < ac)
-		{
-			if (ft_strcmp(av[i], av[j]) > 0)
-			{
-				char *tmp;
-				tmp = av[i];
-				av[i] = av[j];
-				av[j] = tmp;
-			}
-			j++;
-		}
-		i++;
 	}
 }
 
@@ -107,7 +82,6 @@ void			ft_ls(int ac, char **av)
 
 	options = init_opt();
 	start_point = load_options(options, ac, av);
-	options->total_files = ac - start_point - 1;
 	/*printf("Starting point: %d\n", start_point);
 	printf("---\nLoaded options:\n");
 	printf("Recursive: %d\n", options->rec);

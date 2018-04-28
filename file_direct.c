@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/27 10:44:18 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 19:43:16 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 14:35:36 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ void		process_files(int begin, int ac, char **av, t_opt *options)
 		{
 			options->count++;
 			file_push(&files, init_file(av[begin],
-					   (av[begin][0] != '/' ? "." : ""),
-					   	options));
+					   (av[begin][0] != '/' ? "." : "")));
 		}
 		if (dir)
 			closedir(dir);
@@ -51,7 +50,7 @@ void		process_files(int begin, int ac, char **av, t_opt *options)
 	if (options->sorted_t)
 		sort_files_bytime(&files);
 	else
-		sort_files_byname(&files, (options->reversed ? TRUE : FALSE));
+		sort_files_byname(&files);
 	if (options->reversed)
 		reverse_files_list(&files);
 	load_offsets(files, options);

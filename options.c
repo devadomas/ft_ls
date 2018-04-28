@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:26:55 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/27 15:18:42 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/28 14:18:55 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,6 @@ int			load_options(t_opt *options, int ac, char **av)
 		}
 		i++;
 	}
+	options->total_files = ac - i - 1;
 	return (i);
 }
