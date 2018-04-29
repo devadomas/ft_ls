@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:55:40 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/29 15:02:53 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/29 20:06:55 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,41 @@ void		print_usage(const char option, t_opt *options)
 	ft_putstr_fd("] [file ...]\n", 2);
 	free(options);
 	exit(1);
+}
+
+void		print_arg_empty(void)
+{
+	ft_putstr_fd("ls: fts_open: No such file or directory\n", 2);
+	exit(1);
+}
+
+void		check_args(int ac, char **av)
+{
+	int i;
+
+	i = 1;
+	while (i < ac)
+	{
+		if (av[i][0] == '\0')
+			print_arg_empty();
+		i++;
+	}
+}
+
+void		precheck_args(int begin, int ac, char **av)
+{
+	DIR		*dir;
+
+	while (begin < ac)
+	{
+		dir = opendir(av[begin]);
+		if (!dir)
+		{
+			if (errno == ENOENT)
+				print_error(av[begin]);
+		}
+		else
+			closedir(dir);
+		begin++;
+	}
 }

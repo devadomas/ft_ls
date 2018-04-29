@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 19:51:18 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/29 17:25:21 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ static void		format_cols(t_file *files, t_opt *options, int cols)
 			file = get_nth_file(files, index, options->include_hidden);
 			if (!file)
 				break ;
-			//printf("%-*s", options->title_offset + 1, file->filename);
 			print_str(file->filename, options->title_offset + 1, 0, 0);
 		}
-		//printf("\n");
 		ft_putchar('\n');
 	}
 }
@@ -51,7 +49,6 @@ void			format_simple(t_file *files, t_opt *options)
 		{
 			ft_putstr(files->filename);
 			ft_putchar('\n');
-			// printf("%s\n", files->filename);
 		}
 		files = files->next;
 	}
@@ -61,9 +58,6 @@ void			format_output(t_file *files, t_opt *options, t_bool long_mode)
 {
 	int			cols;
 
-	/*
-	 * TODO: ignoring other flags
-	 */
 	if (options->long_list)
 		format_long(files, options, long_mode);
 	else if (options->one)

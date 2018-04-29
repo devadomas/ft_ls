@@ -1,5 +1,5 @@
 total 56
--rw-r--r--  1 azaliaus  2018_paris      0 Apr 29 13:34 a
--rwxr-xr-x  1 azaliaus  2018_paris      0 Apr 29 13:34 b
---wx--x--x  1 azaliaus  2018_paris      0 Apr 29 13:34 c
--rwxr-xr-x  1 azaliaus  2018_paris  27344 Apr 29 13:34 ft_ls
+-rw-r--r--  1 azaliaus  2018_paris      0 Apr 29 17:32 a
+-rw-r--r--  1 azaliaus  2018_paris      0 Apr 29 17:32 b
+-rw-r--r--  1 azaliaus  2018_paris      0 Apr 29 17:32 c
+-rwxr-xr-x  1 azaliaus  2018_paris  28432 Apr 29 17:32 ft_ls

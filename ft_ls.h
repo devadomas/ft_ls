@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/29 16:20:39 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/29 20:05:06 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,10 @@ void		print_nbr(long long nbr, int offset, t_bool right, t_bool space);
 void		file_push_back(t_file **list, t_file *file, t_file **lst,
 		t_opt *options);
 void		print_symlink(t_file *file);
+void		print_total(t_file *files, t_opt *options, t_bool long_mode);
+char		*init_path(const char *path, const char *filename);
+void		print_arg_empty(void);
+void		check_args(int ac, char **av);
+void		precheck_args(int begin, int ac, char **av);
+
 #endif

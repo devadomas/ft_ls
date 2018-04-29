@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 11:01:13 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/29 16:00:55 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/29 17:27:01 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_file		*init_file(const char *filename, const char *path)
 
 	ret = (t_file *)malloc(sizeof(t_file));
 	if (!ret || !(ret->filename = ft_strdup(filename)) ||
-			!(ret->path = ft_strjoin_conn(path, filename, '/')) ||
+			!(ret->path = init_path(path, filename)) ||
 			!(sb = (struct stat *)malloc(sizeof(struct stat))) ||
 			lstat(ret->path, sb) != 0)
 		return (NULL);

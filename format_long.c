@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/28 15:07:56 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/29 16:21:58 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/29 17:43:53 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,23 @@
 
 static void		print_file_type(t_file *file)
 {
-	if (S_ISDIR((file->sb)->st_mode))
+	struct stat		*sb;
+
+	sb = file->sb;
+	if (file->symlink)
+		ft_putchar('l');
+	else if (S_ISREG(sb->st_mode))
+		ft_putchar('-');
+	else if (S_ISDIR(sb->st_mode))
 		ft_putchar('d');
-	else
-		ft_putchar((file->symlink ? 'l' : '-'));
+	else if (S_ISBLK(sb->st_mode))
+		ft_putchar('b');
+	else if (S_ISCHR(sb->st_mode))
+		ft_putchar('c');
+	else if (S_ISFIFO(sb->st_mode))
+		ft_putchar('p');
+	else if (S_ISSOCK(sb->st_mode))
+		ft_putchar('s');
 }
 
 static void		print_permissions(t_file *file)
@@ -99,15 +112,7 @@ static void		print_date(t_file *file)
 
 void			format_long(t_file *files, t_opt *options, t_bool long_mode)
 {
-	int		count;
-
-	count = get_file_list_len(files, options->include_hidden); /* doesn't affect time that much */
-	if (long_mode && count)
-	{
-		ft_putstr("total ");
-		ft_putnbr(options->total);
-		ft_putchar('\n');
-	}
+	print_total(files, options, long_mode);
 	while (files)
 	{
 		if (!(is_file_hidden(files->filename) && !(options->include_hidden)))

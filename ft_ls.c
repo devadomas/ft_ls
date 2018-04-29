@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/29 14:05:20 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/29 20:40:33 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,16 @@ void		read_dir(const char *filename, const char *path, t_opt *options,
 		return ;
 	files = NULL;
 	last = files;
-	print_header(options, filename, path, root);
+	
 	if (!dir)
-		print_error(filename);
+	{	
+		if (errno != ENOENT)
+			print_error(filename);
+		print_header(options, filename, path, root);
+	}
 	else
 	{
+		print_header(options, filename, path, root);
 		options->count++;
 		while ((dp = readdir(dir)) != NULL)
 			file_push_back(&files, init_file(dp->d_name, path), &last, options);

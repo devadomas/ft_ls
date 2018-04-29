@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:26:55 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 16:51:48 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/29 20:05:20 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int				load_options(t_opt *options, int ac, char **av)
 	int		i;
 
 	i = 1;
+	check_args(ac, av);
 	while (i < ac)
 	{
 		if (ft_strlen(av[i]) == 2 && av[i][0] == '-' && av[i][1] == '-')
@@ -117,6 +118,7 @@ int				load_options(t_opt *options, int ac, char **av)
 		}
 		i++;
 	}
+	precheck_args(i, ac, av);
 	options->total_files = ac - i - 1;
 	return (i);
 }
