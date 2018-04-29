@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 20:50:18 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/29 16:20:39 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,8 @@ typedef struct			s_file
 	char				*path;
 	int					is_dir;
 	struct stat			*sb;
-	/*char				*gname;
-	char				*uname;*/
-	struct passwd		*usr;
-	struct group		*grp;
+	char				*gname;
+	char				*uname;
 	char				*symlink;
 	struct s_file		*next;
 }						t_file;
@@ -80,7 +78,6 @@ void		ft_ls(int ac, char **av);
 t_opt		*init_opt(void);
 int			load_options(t_opt *options, int ac, char **av);
 void		print_error(const char *filename);
-void		file_push(t_file **list, t_file *file, t_opt *options);
 t_file		*init_file(const char *filename, const char *path);
 void		read_dir(const char *filename, const char *path, t_opt *options,
 		int root);
@@ -108,8 +105,7 @@ void		sort_files(t_opt *options, t_file **files);
 
 void		print_str(const char *str, int offset, t_bool right, t_bool space);
 void		print_nbr(long long nbr, int offset, t_bool right, t_bool space);
-
 void		file_push_back(t_file **list, t_file *file, t_file **lst,
 		t_opt *options);
-
+void		print_symlink(t_file *file);
 #endif

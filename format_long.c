@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/28 15:07:56 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 21:51:08 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/29 16:21:58 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		print_file_type(t_file *file)
 static void		print_permissions(t_file *file)
 {
 	struct stat		*sb;
-	
+
 	sb = file->sb;
 	print_file_type(file);
 	ft_putchar((sb->st_mode & S_IRUSR) ? 'r' : '-');
@@ -45,16 +45,18 @@ static void		print_permissions(t_file *file)
 		ft_putchar((sb->st_mode & S_IXOTH) ? 't' : 'T');
 	else
 		ft_putchar((sb->st_mode & S_IXOTH) ? 'x' : '-');
-	ft_putchar((listxattr(file->path, NULL, 0, XATTR_NOFOLLOW) > 0 ? '@' : ' '));
+	ft_putchar((listxattr(file->path, NULL, 0, XATTR_NOFOLLOW) > 0 ?
+				'@' : ' '));
 	ft_putchar(' ');
 }
 
-static char		*splice_year(char *str)
+static char		*splice_year(char *str, char **formatted)
 {
 	char		*ret;
 	int			i;
 	int			b;
 
+	free(*formatted);
 	i = 20;
 	while (str[i] == ' ')
 		i++;
@@ -62,6 +64,7 @@ static char		*splice_year(char *str)
 	while (ft_isdigit(str[b]))
 		b++;
 	ret = ft_strsub(str, i, b - i);
+	*formatted = ret;
 	return (ret);
 }
 
@@ -81,25 +84,24 @@ static void		print_date(t_file *file)
 	{
 		formatted = ft_strsub(time_str, 4, 7);
 		ft_putstr(formatted);
-		free(formatted);
-		formatted = splice_year(time_str);
+		splice_year(time_str, &formatted);
 		ft_putchar(' ');
 		ft_putstr(formatted);
 		free(formatted);
+		ft_putchar(' ');
+		return ;
 	}
-	else
-	{
-		formatted = ft_strsub(time_str, 4, 12);
-		ft_putstr(formatted);
-		free(formatted);
-	}
+	formatted = ft_strsub(time_str, 4, 12);
+	ft_putstr(formatted);
+	free(formatted);
+	ft_putchar(' ');
 }
 
 void			format_long(t_file *files, t_opt *options, t_bool long_mode)
 {
 	int		count;
 
-	count = get_file_list_len(files, options->include_hidden);
+	count = get_file_list_len(files, options->include_hidden); /* doesn't affect time that much */
 	if (long_mode && count)
 	{
 		ft_putstr("total ");
@@ -111,33 +113,14 @@ void			format_long(t_file *files, t_opt *options, t_bool long_mode)
 		if (!(is_file_hidden(files->filename) && !(options->include_hidden)))
 		{
 			print_permissions(files);
-			//printf("%*d ", options->hlink_offset, (files->sb)->st_nlink);
-			print_nbr((files->sb)->st_nlink, options->hlink_offset, TRUE, TRUE);
-			//printf("%-*s ", options->owner_offset, files->uname);
-			
-			if (files->usr)
-				print_str(files->usr->pw_name, options->owner_offset, FALSE, TRUE);
-			else
-				print_nbr(files->sb->st_uid, options->owner_offset, FALSE, TRUE);
-			//printf(" %-*s ", options->group_offset, files->gname);
+			print_nbr((files->sb)->st_nlink, options->hlink_offset, 1, 1);
+			print_str(files->uname, options->owner_offset, 0, 1);
 			ft_putchar(' ');
-			if (files->grp)
-				print_str(files->grp->gr_name, options->group_offset, FALSE, TRUE);
-			else
-				print_nbr(files->sb->st_gid, options->group_offset, FALSE, TRUE);
-			//printf("%*lld ", options->size_offset + 1, (files->sb)->st_size);
+			print_str(files->gname, options->group_offset, 0, 1);
 			print_nbr((files->sb)->st_size, options->size_offset + 1, 1, 1);
 			print_date(files);
-			//printf(" %s", files->filename);
-			ft_putchar(' ');
 			ft_putstr(files->filename);
-			if (files->symlink)
-			{
-				//printf(" -> %s", files->symlink);
-				ft_putstr(" -> ");
-				ft_putstr(files->symlink);
-			}
-			//printf("\n");
+			print_symlink(files);
 			ft_putchar('\n');
 		}
 		files = files->next;

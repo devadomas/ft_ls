@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 16:27:16 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/28 20:44:16 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/29 16:06:24 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void		load_offset(t_file *file, t_opt *options)
 	int				len;
 	struct stat		*sb;
 
-	if (!options)
-		return ;
 	sb = file->sb;
 	if (sb &&
 			!(is_file_hidden(file->filename) && !(options->include_hidden)))
@@ -33,10 +31,10 @@ void		load_offset(t_file *file, t_opt *options)
 		len = ft_get_nbr_len(sb->st_nlink);
 		if (len > options->hlink_offset)
 			options->hlink_offset = len;
-		len = (file->usr ? ft_strlen(file->usr->pw_name) : 0);
+		len = (file->uname ? ft_strlen(file->uname) : 0);
 		if (len > options->owner_offset)
 			options->owner_offset = len;
-		len = (file->grp ? ft_strlen(file->grp->gr_name) : 0);
+		len = (file->gname ? ft_strlen(file->gname) : 0);
 		if (len > options->group_offset)
 			options->group_offset = len;
 		len = ft_get_nbr_len(sb->st_size);
