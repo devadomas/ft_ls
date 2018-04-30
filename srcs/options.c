@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:26:55 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/29 20:05:20 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/30 17:02:35 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_opt			*init_opt(void)
 
 	if (!(ret = (t_opt *)malloc(sizeof(t_opt))) ||
 			!(ret->window = (struct winsize *)malloc(sizeof(struct winsize))) ||
-			!(ret->charset = ft_strdup("1alrRt")))
+			!(ret->charset = ft_strdup("1afglorRtiuz")))
 		return (0);
 	ret->rec = 0;
 	ret->long_list = 0;
@@ -35,12 +35,12 @@ t_opt			*init_opt(void)
 	ret->title_offset = 0;
 	ret->total = 0;
 	ret->total_files = 0;
+	ret->flag_u = 0;
+	ret->flag_f = 0;
+	ret->flag_g = 0;
+	ret->flag_o = 0;
 	return (ret);
 }
-
-/*
- * TODO: add other options when bonus added
- */
 
 int				opt_count(t_opt *opt)
 {
@@ -48,7 +48,8 @@ int				opt_count(t_opt *opt)
 
 	ret = 0;
 	ret += opt->rec + opt->long_list + opt->include_hidden + opt->reversed +
-		opt->sorted_t + opt->one;
+		opt->sorted_t + opt->one + opt->flag_u + opt->flag_f + opt->flag_g +
+		opt->flag_o + opt->color;
 	return (ret);
 }
 
@@ -80,16 +81,22 @@ static int		check_charset(const char *str, t_opt *options)
 
 static int		parse_options(t_opt *ret, char *str)
 {
+	ret->color = 0;
 	while (*str)
 	{
 		if (!check_charset((str + 1), ret))
 			return (0);
 		ret->rec = (*str == 'R' ? 1 : ret->rec);
-		ret->long_list = (*str == 'l' ? 1 : ret->long_list);
+		ret->long_list = (*str == 'l' ? set_dup_arg(ret, 'l') : ret->long_list);
 		ret->include_hidden = (*str == 'a' ? 1 : ret->include_hidden);
 		ret->reversed = (*str == 'r' ? 1 : ret->reversed);
 		ret->sorted_t = (*str == 't' ? 1 : ret->sorted_t);
-		ret->one = (*str == '1' ? 1 : ret->one);
+		ret->one = (*str == '1' ? set_dup_arg(ret, '1') : ret->one);
+		ret->flag_u = (*str == 'u' ? 1 : ret->flag_u);
+		ret->flag_g = (*str == 'g' ? set_dup_arg(ret, 'g') : ret->flag_g);
+		ret->flag_o = (*str == 'o' ? set_dup_arg(ret, 'o') : ret->flag_o);
+		ret->flag_f = (*str == 'f' ? set_dup_arg(ret, 'f') : ret->flag_f);
+		ret->color = (*str == 'z' ? 1 : ret->color);
 		str++;
 	}
 	return (1);
@@ -100,14 +107,13 @@ int				load_options(t_opt *options, int ac, char **av)
 	int		i;
 
 	i = 1;
-	check_args(ac, av);
 	while (i < ac)
 	{
 		if (ft_strlen(av[i]) == 2 && av[i][0] == '-' && av[i][1] == '-')
 		{
 			i++;
 			if (i == ac)
-				return (i);
+				break ;
 		}
 		if (av[i][0] != '-' || (av[i][0] == '-' && ft_strlen(av[i]) < 2))
 			break ;
@@ -118,7 +124,7 @@ int				load_options(t_opt *options, int ac, char **av)
 		}
 		i++;
 	}
-	precheck_args(i, ac, av);
+	check_args(i, ac, av);
 	options->total_files = ac - i - 1;
 	return (i);
 }

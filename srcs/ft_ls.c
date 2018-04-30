@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:45:11 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/29 20:40:33 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/30 14:56:25 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,13 @@ void		read_dir(const char *filename, const char *path, t_opt *options,
 		return ;
 	files = NULL;
 	last = files;
-	
 	if (!dir)
-	{	
+	{
 		if (errno != ENOENT)
+		{
+			print_header(options, filename, path, root);
 			print_error(filename);
-		print_header(options, filename, path, root);
+		}
 	}
 	else
 	{
@@ -78,14 +79,6 @@ void		ft_ls(int ac, char **av)
 
 	options = init_opt();
 	start_point = load_options(options, ac, av);
-	/*printf("Starting point: %d\n", start_point);
-	printf("---\nLoaded options:\n");
-	printf("Recursive: %d\n", options->rec);
-	printf("Long list: %d\n", options->long_list);
-	printf("Include hidden: %d\n", options->include_hidden);
-	printf("Reversed: %d\n", options->reversed);
-	printf("Sorted t: %d\n", options->sorted_t);
-	printf("---\n");*/
 	sort_arguments(start_point, ac, av);
 	if (start_point == ac)
 		read_dir(".", ".", options, 1);

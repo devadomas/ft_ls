@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/29 17:25:21 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/30 17:04:30 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void			format_simple(t_file *files, t_opt *options)
 	{
 		if (!(is_file_hidden(files->filename) && !(options->include_hidden)))
 		{
-			ft_putstr(files->filename);
+			color_output(files, options);
 			ft_putchar('\n');
 		}
 		files = files->next;

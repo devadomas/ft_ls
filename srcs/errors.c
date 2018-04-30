@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:55:40 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/29 20:06:55 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/30 11:24:40 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ void		print_arg_empty(void)
 	exit(1);
 }
 
-void		check_args(int ac, char **av)
+void		check_args(int begin, int ac, char **av)
 {
 	int i;
 
-	i = 1;
+	i = begin;
 	while (i < ac)
 	{
 		if (av[i][0] == '\0')
@@ -66,7 +66,7 @@ void		precheck_args(int begin, int ac, char **av)
 	while (begin < ac)
 	{
 		dir = opendir(av[begin]);
-		if (!dir)
+		if (!dir && (lstat(av[begin], NULL) != 0))
 		{
 			if (errno == ENOENT)
 				print_error(av[begin]);

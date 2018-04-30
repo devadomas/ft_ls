@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_floor.c                                         :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 21:11:48 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/26 10:41:38 by azaliaus         ###   ########.fr       */
+/*   Created: 2018/04/30 16:20:17 by azaliaus          #+#    #+#             */
+/*   Updated: 2018/04/30 17:01:41 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int			ft_floor(float nbr)
+int			set_dup_arg(t_opt *options, char arg)
 {
-	int			ret;
-	float		calc;
-
-	calc = nbr - (int)nbr;
-	calc *= 10;
-	ret = (int)calc;
-	return (ret >= 5 ? (int)nbr + 1 : (int)nbr);
-}
-
-int			ft_floor_up(float nbr)
-{
-	int			ret;
-	float		calc;
-
-	calc = nbr - (int)nbr;
-	calc *= 10;
-	ret = (int)calc;
-	return (ret >= 1 ? (int)nbr + 1 : (int)nbr);
+	if (arg == '1')
+		options->long_list = 0;
+	if (arg == 'l')
+		options->one = 0;
+	if (arg == 'f')
+		options->include_hidden = 1;
+	if (arg == 'g')
+		options->long_list = 1;
+	if (arg == 'o')
+		options->long_list = 1;
+	return (1);
 }

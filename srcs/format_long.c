@@ -6,7 +6,7 @@
 /*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/28 15:07:56 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/29 17:43:53 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/30 17:04:04 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ static void		print_permissions(t_file *file)
 		ft_putchar((sb->st_mode & S_IXOTH) ? 't' : 'T');
 	else
 		ft_putchar((sb->st_mode & S_IXOTH) ? 'x' : '-');
-	ft_putchar((listxattr(file->path, NULL, 0, XATTR_NOFOLLOW) > 0 ?
-				'@' : ' '));
+	print_acl(file);
 	ft_putchar(' ');
 }
 
@@ -81,7 +80,7 @@ static char		*splice_year(char *str, char **formatted)
 	return (ret);
 }
 
-static void		print_date(t_file *file)
+static void		print_date(t_file *file, t_opt *opt)
 {
 	time_t			now;
 	time_t			calc;
@@ -91,8 +90,8 @@ static void		print_date(t_file *file)
 	if (!(file->sb))
 		return ;
 	time(&now);
-	time_str = ctime(&(file->sb)->st_mtime);
-	calc = now - (file->sb)->st_mtime;
+	time_str = ctime((opt->flag_u ? &file->sb->st_atime : &file->sb->st_mtime));
+	calc = now - (opt->flag_u ? (file->sb)->st_atime : (file->sb)->st_mtime);
 	if (ABS(calc) > 15724800)
 	{
 		formatted = ft_strsub(time_str, 4, 7);
@@ -119,12 +118,16 @@ void			format_long(t_file *files, t_opt *options, t_bool long_mode)
 		{
 			print_permissions(files);
 			print_nbr((files->sb)->st_nlink, options->hlink_offset, 1, 1);
-			print_str(files->uname, options->owner_offset, 0, 1);
-			ft_putchar(' ');
-			print_str(files->gname, options->group_offset, 0, 1);
+			if (!(options->flag_g))
+				print_str(files->uname, options->owner_offset, 0, 1);
+			if ((!(options->flag_o) && !(options->flag_g)) ||
+					(options->flag_g && options->flag_o))
+				ft_putchar(' ');
+			if (!(options->flag_o))
+				print_str(files->gname, options->group_offset, 0, 1);
 			print_nbr((files->sb)->st_size, options->size_offset + 1, 1, 1);
-			print_date(files);
-			ft_putstr(files->filename);
+			print_date(files, options);
+			color_output(files, options);
 			print_symlink(files);
 			ft_putchar('\n');
 		}
