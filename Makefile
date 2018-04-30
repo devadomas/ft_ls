@@ -6,7 +6,7 @@
 #    By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/09 16:23:27 by azaliaus          #+#    #+#              #
-#    Updated: 2018/04/30 17:29:28 by azaliaus         ###   ########.fr        #
+#    Updated: 2018/04/30 18:10:46 by azaliaus         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ all: $(NAME)
 
 $(NAME):
 	#cd libft && make re
-	@gcc $(FLAGS) -o $(NAME) $(SRC_LST) $(INCLUDES) $(LIB)
+	@gcc $(FLAGS) -o $(NAME) $(SRC_LST) libft/libft.a $(INCLUDES) $(LIB)
 	@echo "Successfully made!"
 
 clean:

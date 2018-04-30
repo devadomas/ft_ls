@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 16:20:17 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/30 17:01:41 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/30 18:37:48 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,35 @@ int			set_dup_arg(t_opt *options, char arg)
 	if (arg == 'o')
 		options->long_list = 1;
 	return (1);
+}
+
+void		check_args(int begin, int ac, char **av)
+{
+	int i;
+
+	i = begin;
+	while (i < ac)
+	{
+		if (av[i][0] == '\0')
+			print_arg_empty();
+		i++;
+	}
+}
+
+void		precheck_args(int begin, int ac, char **av)
+{
+	DIR		*dir;
+
+	while (begin < ac)
+	{
+		dir = opendir(av[begin]);
+		if (!dir && (lstat(av[begin], NULL) != 0))
+		{
+			if (errno == ENOENT)
+				print_error(av[begin]);
+		}
+		else
+			closedir(dir);
+		begin++;
+	}
 }

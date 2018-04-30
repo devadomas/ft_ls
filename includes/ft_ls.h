@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/30 17:33:31 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/04/30 18:13:35 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,7 @@ void					precheck_args(int begin, int ac, char **av);
 void					print_acl(t_file *file);
 int						set_dup_arg(t_opt *options, char arg);
 void					color_output(t_file *file, t_opt *options);
+void					process_dirs(int start_point, int ac, char **av,
+	t_opt *options);
 
 #endif
