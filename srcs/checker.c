@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 16:20:17 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/30 18:37:48 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/01 07:56:37 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		precheck_args(int begin, int ac, char **av)
 			if (errno == ENOENT)
 				print_error(av[begin]);
 		}
-		else
+		if (dir)
 			closedir(dir);
 		begin++;
 	}

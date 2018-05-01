@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:55:40 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/30 18:37:44 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/01 07:55:22 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,11 @@ void		print_error(const char *filename)
 	char		*error;
 
 	error = strerror(errno);
-	if (errno != 20)
-	{
 		ft_putstr_fd("ls: ", 2);
 		ft_putstr_fd(filename, 2);
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(error, 2);
 		ft_putchar_fd('\n', 2);
-	}
 }
 
 void		print_usage(const char option, t_opt *options)

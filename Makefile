@@ -6,7 +6,7 @@
 #    By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/09 16:23:27 by azaliaus          #+#    #+#              #
-#    Updated: 2018/04/30 21:24:29 by azaliaus         ###   ########.fr        #
+#    Updated: 2018/04/30 21:40:21 by azaliaus         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS = acl.c checker.c directory.c errors.c file_direct.c file_list.c \
 		files_sorts.c files.c format_long.c format.c ft_ls.c helper.c main.c \
 		memory.c offsets.c options.c print_helper.c print.c sort.c
 
-INCLUDES = -I libft/includes -I./includes
+INCLUDES = -I./libft/includes -I./includes
 
 LIB_PATH = libft
 LIB_LINK = -L $(LIB_PATH) -lft
