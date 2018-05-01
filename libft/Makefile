@@ -6,7 +6,7 @@
 #    By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 15:12:15 by azaliaus          #+#    #+#              #
-#    Updated: 2018/04/30 21:32:53 by azaliaus         ###   ########.fr        #
+#    Updated: 2018/05/01 08:25:30 by azaliaus         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,17 +34,18 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rc $(NAME) $(OBJS)
-	ranlib $(NAME)
+	@ar rc $(NAME) $(OBJS)
+	@ranlib $(NAME)
+	@echo "Libft compiled!"
 
 %.o: %.c
-	gcc $(FLAGS) -c -o $@ $< -I./includes
+	@gcc $(FLAGS) -c -o $@ $< -I./includes
 
 clean:
-	rm -rf $(OBJS)
+	@rm -rf $(OBJS)
 
 fclean: clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re: fclean all
 
