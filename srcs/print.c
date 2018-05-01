@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/28 19:02:52 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/05/01 08:16:05 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/01 09:47:38 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void		print_color_offset(t_file *file, t_opt *options, int offset)
 
 void		color_output(t_file *file, t_opt *options)
 {
+	if (!(file->filename))
+		return ;
 	if (options->color)
 	{
 		if (S_ISDIR(file->sb->st_mode))
