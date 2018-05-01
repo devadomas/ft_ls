@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:26:55 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/30 17:02:35 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/01 08:00:50 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_opt			*init_opt(void)
 
 	if (!(ret = (t_opt *)malloc(sizeof(t_opt))) ||
 			!(ret->window = (struct winsize *)malloc(sizeof(struct winsize))) ||
-			!(ret->charset = ft_strdup("1afglorRtiuz")))
+			!(ret->charset = ft_strdup("1afglorRtuz")))
 		return (0);
 	ret->rec = 0;
 	ret->long_list = 0;

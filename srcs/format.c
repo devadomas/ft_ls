@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 15:11:39 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/30 17:04:30 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/01 08:21:11 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void		format_cols(t_file *files, t_opt *options, int cols)
 			file = get_nth_file(files, index, options->include_hidden);
 			if (!file)
 				break ;
-			print_str(file->filename, options->title_offset + 1, 0, 0);
+			print_color_offset(file, options, options->title_offset + 1);
 		}
 		ft_putchar('\n');
 	}

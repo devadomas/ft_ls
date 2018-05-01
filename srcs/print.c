@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/28 19:02:52 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/30 17:16:14 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/01 08:16:05 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,15 @@ void		print_nbr(long long nbr, int offset, t_bool right, t_bool space)
 		print_gaps(offset);
 	if (space)
 		ft_putchar(' ');
+}
+
+void		print_color_offset(t_file *file, t_opt *options, int offset)
+{
+	if (!file)
+		return ;
+	offset -= ft_strlen(file->filename);
+	color_output(file, options);
+	print_gaps(offset);
 }
 
 void		color_output(t_file *file, t_opt *options)
