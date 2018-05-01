@@ -5,7 +5,7 @@ Solution of project ft_ls from 42 University curriculum.
 
 MIT License
 
-Copyright (c) 2018 azaliaus
+Copyright (c) 2018 Adomas Zaliauskas
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
