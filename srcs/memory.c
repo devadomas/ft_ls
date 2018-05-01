@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azaliaus <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:30:49 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/29 16:02:59 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/01 15:24:22 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,17 @@ void		clean_options(t_opt *options)
 	options->size_offset = 0;
 	options->title_offset = 0;
 	options->total = 0;
+}
+
+void		clear_failed_file(t_file *file)
+{
+	if (!file)
+		return ;
+	if (file->filename)
+		free(file->filename);
+	if (file->path)
+		free(file->path);
+	if (file->sb)
+		free(file->sb);
+	free(file);
 }

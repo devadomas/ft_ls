@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 11:01:13 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/29 17:27:01 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/01 15:27:40 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static char	*get_symlink(const char *path)
+static char		*get_symlink(const char *path)
 {
 	char			*ret;
 	int				len;
@@ -30,20 +30,44 @@ static char	*get_symlink(const char *path)
 	return (ret);
 }
 
-t_file		*init_file(const char *filename, const char *path)
+static t_bool	init_vars(const char *filename, const char *path, t_file **lst)
+{
+	if (!(*lst))
+		return (FALSE);
+	if (!((*lst)->filename = ft_strdup(filename)))
+	{
+		clear_failed_file(*lst);
+		return (FALSE);
+	}
+	if (!((*lst)->path = init_path(path, filename)))
+	{
+		clear_failed_file(*lst);
+		return (FALSE);
+	}
+	if (!((*lst)->sb = (struct stat *)malloc(sizeof(struct stat))))
+	{
+		clear_failed_file(*lst);
+		return (FALSE);
+	}
+	if (lstat((*lst)->path, (*lst)->sb) != 0)
+	{
+		clear_failed_file(*lst);
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
+t_file			*init_file(const char *filename, const char *path)
 {
 	t_file			*ret;
 	struct stat		*sb;
 	struct group	*grp;
 	struct passwd	*usr;
 
-	ret = (t_file *)malloc(sizeof(t_file));
-	if (!ret || !(ret->filename = ft_strdup(filename)) ||
-			!(ret->path = init_path(path, filename)) ||
-			!(sb = (struct stat *)malloc(sizeof(struct stat))) ||
-			lstat(ret->path, sb) != 0)
+	if (!(ret = (t_file *)malloc(sizeof(t_file))) ||
+		!init_vars(filename, path, &ret))
 		return (NULL);
-	ret->sb = sb;
+	sb = ret->sb;
 	ret->symlink = get_symlink(ret->path);
 	if (sb->st_mode)
 		ret->is_dir = (S_ISDIR(sb->st_mode) ? 1 : 0);
@@ -56,9 +80,11 @@ t_file		*init_file(const char *filename, const char *path)
 	return (ret);
 }
 
-void		file_push_back(t_file **list, t_file *file, t_file **lst,
+void			file_push_back(t_file **list, t_file *file, t_file **lst,
 		t_opt *options)
 {
+	if (!file)
+		return ;
 	file->next = NULL;
 	if (!(*list))
 	{
@@ -73,7 +99,7 @@ void		file_push_back(t_file **list, t_file *file, t_file **lst,
 	load_offset(file, options);
 }
 
-t_bool		is_file_hidden(const char *filename)
+t_bool			is_file_hidden(const char *filename)
 {
 	if (filename)
 		if (*filename == '.')

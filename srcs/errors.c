@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:55:40 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/05/01 08:21:30 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/01 14:06:36 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void		print_usage(const char option, t_opt *options)
 	ft_putstr_fd("usage: ft_ls [-", 2);
 	ft_putstr_fd(options->charset, 2);
 	ft_putstr_fd("] [file ...]\n", 2);
+	free(options->charset);
 	free(options);
 	exit(1);
 }

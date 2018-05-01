@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/05/01 08:15:49 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/01 16:34:12 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,7 @@ void					process_dirs(int start_point, int ac, char **av,
 	t_opt *options);
 void					print_color_offset(t_file *file, t_opt *options,
 	int offset);
+void					clear_failed_file(t_file *file);
+char					**make_av_cpy(int ac, char **av);
 
 #endif
