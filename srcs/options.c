@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:26:55 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/05/01 08:00:50 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/06 16:36:44 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_opt			*init_opt(void)
 
 	if (!(ret = (t_opt *)malloc(sizeof(t_opt))) ||
 			!(ret->window = (struct winsize *)malloc(sizeof(struct winsize))) ||
-			!(ret->charset = ft_strdup("1afglorRtuz")))
+			!(ret->charset = ft_strdup(FT_LS_CHARSET)))
 		return (0);
 	ret->rec = 0;
 	ret->long_list = 0;

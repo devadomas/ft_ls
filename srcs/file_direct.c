@@ -6,11 +6,13 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/27 10:44:18 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/04/30 18:11:15 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/06 18:49:45 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+#include <stdlib.h>
 
 t_bool		is_file(const char *path)
 {

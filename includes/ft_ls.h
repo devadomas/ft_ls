@@ -6,7 +6,7 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 09:44:35 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/05/01 16:34:12 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/06 16:36:59 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define ABS(Value)		(Value < 0 ? -Value : Value)
 
 # define LINK_BUFF		512
+# define FT_LS_CHARSET	"1afglorRtuz"
 
 # define COLOR_RED		"\x1b[31m"
 # define COLOR_GREEN	"\x1b[32m"
