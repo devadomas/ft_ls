@@ -6,12 +6,11 @@
 /*   By: azaliaus <azaliaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 18:17:57 by azaliaus          #+#    #+#             */
-/*   Updated: 2018/05/06 19:14:36 by azaliaus         ###   ########.fr       */
+/*   Updated: 2018/05/07 09:10:30 by azaliaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
 #include <stdlib.h>
 
 void		ft_ls(int ac, char **av)
