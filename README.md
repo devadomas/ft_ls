@@ -1,5 +1,5 @@
 # ft_ls
-Solution of project ft_ls from 42 University curriculum.
+Solution of project ft_ls from 42 University curriculum. Bare in mind that it has some flaws which was not solved yet(feel free to fix it ;). More detailed description will be uploaded soon...
 
 # License
 
